@@ -1,6 +1,8 @@
-* {
+*{
     font-family: Aileron;
-    letter-spacing: -0.5px;
+    letter-spacing: 0.8px;
+    margin: 0;
+    padding: 0;
 }
 .form-control {
     margin: 2.5% 0;
@@ -34,14 +36,13 @@
     font-size: large;
     padding: 10px 40px;
 }
-.btn {
+
+.btn-login {
+    border-radius: 20px;
     background: rgb(74, 107, 209);
     color: #fff;
     transition: 0.5s;
     font-size: larger;
-}
-.btn-login {
-    border-radius: 20px;
 }
 .btn:hover {
     color: rgb(74, 107, 209);
@@ -52,4 +53,10 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
+} 
+
+@media (max-width:2550px) {
+    .swapbtn{
+        width: 100px;
+    }
 }
