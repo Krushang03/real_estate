@@ -12,13 +12,13 @@ export default function UserAuth() {
                 Login
             </button>
 
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-xl">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            {/* <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1> */}
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+            <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl modal-dialog-centered">
+                    <div className="modal-content ">
+                        {/* <div className="modal-header">
+                        </div> */}
+                        <button type="button" className="btn-close ms-auto m-4" data-bs-dismiss="modal" aria-label="Close"></button>
+
                         <div className="modal-body" style={{overflowX:"hidden"}}>
                             <div className="content " id='userauth'>
                                 <div className="container">

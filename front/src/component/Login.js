@@ -14,10 +14,12 @@ const Login = () => {
     password: yup
       .string()
       .required("Please enter your password")
-      .matches(
-        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-        "Please enter your correct password"
-      ),
+      // .matches(
+      //   /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+      //   "Please enter your correct password"
+      // )
+      
+      
   })
 
   const [passwordShown, setPasswordShown] = useState(false);
@@ -25,10 +27,11 @@ const Login = () => {
     setPasswordShown(!passwordShown);
   };
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } , reset} = useForm({
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
+    reset()
     console.log(data);
     axios
       .post("http://127.0.0.1:5000/login", data, {

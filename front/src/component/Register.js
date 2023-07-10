@@ -19,14 +19,17 @@ const Register = () => {
         confirmPassword: yup.string().oneOf([yup.ref("password"), null], "password does not match").required(""),
     })
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors },reset } = useForm({
         resolver: yupResolver(schema)
     });
 
     const onSubmit = (data) => {
-        console.log(data);
+        const item = {username:data.username,email:data.email,password:data.password}
+        console.log(item,"user details");
+      reset()
         axios
-            .post("http://127.0.0.1:5000/register", data, {
+            .post("http://127.0.0.1:5000/register", 
+             item, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
