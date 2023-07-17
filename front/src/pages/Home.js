@@ -1,66 +1,82 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa"
 import '../Style/Home.css'
 
 
 const Home = () => {
     return (
         <>
-        <div className="comtainer-fluid">
-            <div className="img ">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h1 className="text" style={{ fontSize: '50px' }}>
-                                Welcome to RealEstate,<br></br>
-                                Helping you live life to the fullest
-                            </h1>
-                        </div>
-                        <div className="row search rounded">
-                            <div className="col-12 ">
-                                <div className="shadow rounded">
-                                <div style={{padding:"30px 0"}}>
-                                <h1 className="ms-5">Explore Our Properties</h1><br />
-                                    <div className="row d-flex justify-content-evenly">
-                                        <div className="col-lg-3 col-md-10 col-sm-10 ">
-                                            <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected>Open this select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                        <div className="col-lg-3 col-md-10 col-sm-10">
-                                            <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected>Open this select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                        <div className="col-lg-3 col-md-10 col-sm-10">
-                                            <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                                <option selected>Open this select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                        <div className="col-lg-2 col-md-10 col-xl-1">
-                                            <button type="button" className="btn btn-outline-light d-flex justify-content-center align-items-center"><FaSearch style={{ fontSize:'20px',paddingLeft: '2px', height: '35px'}} /> <span style={{ fontSize:'20px'}}>Search</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                   
+            <section className="home">
+                <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
+                    <div className="carousel-inner">
+                        <div className="carousel-item active image img-1">
+                            <div className="row black-bg d-flex justify-content-center align-items-center">
+                                <div className="col-md-6">
+                                    <h1 className="flex-wrap">FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE</h1>
+                                    <p className="flex-wrap">Search real estate property records, houses, condos, land and more on realestate.com®.
+                                        Find property info from the most comprehensive source data.</p>
                                 </div>
                             </div>
                         </div>
+                        <div className="carousel-item image img-2">
+                            <div className="row black-bg d-flex justify-content-center align-items-center">
+                                <div className="col-md-6">
+                                    <h1 className="flex-wrap">FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE</h1>
+                                    <p className="flex-wrap">Search real estate property records, houses, condos, land and more on realestate.com®.
+                                        Find property info from the most comprehensive source data.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="carousel-item image img-3">
+                            <div className="row black-bg d-flex justify-content-center align-items-center">
+                                <div className="col-md-6">
+                                    <h1 className="flex-wrap">FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE</h1>
+                                    <p className="flex-wrap">Search real estate property records, houses, condos, land and more on realestate.com®.
+                                        Find property info from the most comprehensive source data.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span className="visually-hidden">Previous</span>
+                        </button>
+                        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span className="visually-hidden">Next</span>
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+            <section className="search">
+                <div className="container">
+                    <div className="row form_search d-flex justify-content-evenly align-items-center">
+                        <div className="col-md-4">
+                            <input type="text" placeholder="Enter a street name,address number or keybord" className="form-control" />
+                        </div>
+                        <div className="col-md-3 select">
+                            <select name="city" id="city" className="form-select">
+                                <option value="city">City</option>
+                                <option value="surat">Surat</option>
+                                <option value="vadodra">Vadodra</option>
+                                <option value="ahemdabad">Ahemdabad</option>
+                                <option value="bardoli">Bardoli</option>
+                            </select>
+                        </div>
+                        <div className="col-md-3 select">
+                            <select name="state" id="state" className="form-select">
+                                <option value="state">State</option>
+                                <option value="gujarat">Gujarat</option>
+                                <option value="maharashatra">Maharashatra</option>
+                                <option value="rajsthan">Rajsthan</option>
+                            </select>
+                        </div>
+                        <div className="col-md-2">
+                            <button type="button" className="btn btn-outline-light form-control">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </>
-            
+
     );
 }
 

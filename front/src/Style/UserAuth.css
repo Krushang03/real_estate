@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
 }
-.form-control {
+.from-ctr {
     margin: 2.5% 0;
     padding: 10px 20px;
     font-size: large;
@@ -58,5 +58,10 @@
 @media (max-width:2550px) {
     .swapbtn{
         width: 100px;
+    }
+}
+@media (max-width:992px) {
+    #userauth{
+        margin-top: 40px;
     }
 }

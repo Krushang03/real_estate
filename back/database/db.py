@@ -10,32 +10,54 @@ def connection():
     )
     return conn
 
-def create_table():
+
+
+def create_tables():
     conn = connection()
     cursor = conn.cursor()
-    query  = """CREATE TABLE IF NOT EXISTS users(id bigserial,username char(100) unique not null,email varchar(100) unique not null, password varchar(100) not null )"""
-    cursor.execute(query)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            u_id varchar(1000) primary key,
+            username VARCHAR(100) UNIQUE NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            password VARCHAR(100) NOT NULL
+        )
+    """)
     conn.commit()
     cursor.close()
     conn.close()
-    
-    
-def c_user(username,email, password):
+
+
+
+
+
+
+
+def c_user(u_id,username, email, password):
     conn = connection()
     cursor = conn.cursor()
 
-    query = "INSERT INTO users (username,email, password) VALUES (%s, %s, %s)"
-    cursor.execute(query, (username, email, password))
+    query = "INSERT INTO users (u_id,username,email, password) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (u_id,username, email,password))
 
     conn.commit()
     cursor.close()
     conn.close()
+
+
+
+
+
 
 def g_user(email):
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM users WHERE email = '{email}'")
+
+    
+    cursor.execute(f"SELECT * FROM users WHERE email ='{email}'",)
+
     user = cursor.fetchone()
+
     conn.commit()
     cursor.close()
     conn.close()
