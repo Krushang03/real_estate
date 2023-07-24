@@ -1,58 +1,61 @@
-// import React, { useEffect, useState } from "react";
 import "../Style/Profile.css";
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AppContext } from "../App";
+import { useSelector } from "react-redux";
+import { ThreeDots } from "react-loader-spinner";
+import { Logout } from "../store/Slices/auth";
+import { useDispatch } from "react-redux";
+
 
 const Profile = () => {
-  const { viewls, setViewLS } = useContext(AppContext);
+  const { loading } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
-  //   let userdetails = JSON.parse(localStorage.getItem("users"));
+  const dispatch = useDispatch();
+  const userDetail = JSON.parse(localStorage.getItem("userInfo"));
 
-  const Logout = () => {
-    // setViewLS(viewls);
-    setViewLS(localStorage.removeItem("users"));
-    navigate("/");
+  const LogoutUser = () => {
+    navigate("/userauth");
+    dispatch(Logout());
   };
-
-  //   let userdetails = JSON.parse(localStorage.getItem("users"));
-
-  //   const Logout = () => {
-  //     localStorage.removeItem("users");
-  //     // setTimeout(() => {
-  //     //   window.location.reload(false);
-  //     // }, 100);
-
-  //     const loggedInUser = JSON.parse(localStorage.getItem("users"));
-  //     if (!loggedInUser) {
-  //       navigate("/");
-  //     }
-  //   };
 
   return (
     <>
       <div className="btn-group">
         <button
           type="button"
-          className="btn btn-info dropdown-toggle"
+          className="btn btn-outline-light dropdown-toggle"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
           <FaUser style={{ fontSize: "14px" }} />
         </button>
         <ul className="dropdown-menu">
-          <li className="dropdown-item d-flex justify-content-evenly">{viewls?.username}</li>
+          <li className="dropdown-item d-flex justify-content-evenly">
+            {userDetail?.username}
+          </li>
           <li>
             <hr className="dropdown-divider" />
           </li>
           <button
             type="button"
-            onClick={Logout}
+            onClick={LogoutUser}
             className="btn btn-danger d-flex mx-auto swapbtn"
           >
-            Logout
+            {loading ? (
+              <ThreeDots
+                height="30"
+                width="50"
+                radius="9"
+                color="#0d6efd"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            ) : (
+              "Logout"
+            )}
           </button>
         </ul>
       </div>

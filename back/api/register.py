@@ -30,23 +30,32 @@ def register():
         else:
             c_user(u_id,username, email, hash_password)
             token = generate_token(email)
-            return jsonify({'message': 'User created successfully','taken': token,'username' : username}), 201
+            return jsonify({'message': 'User created successfully','token': token,'username' : username}), 201
     # except:
     #     return jsonify({'Message':'username or email is already used'})
 
 
 @login_api.post('/login')
 def login():
-    email = request.json.get('email')
-    hash_password = request.json.get('password')
+    
+        email = request.json.get('email')
+        hash_password = request.json.get('password')
+        try:
+            user = g_user(email)
+            if(email==user[2]):
+                if bcrypt.verify(hash_password,user[3]):
+                    token = generate_token(email)
+                    return jsonify({'token': token,'username':user[1]}), 200
+                else:
+                    return jsonify({'message': 'Password does not match'}), 401
+            
+        except:
+            return jsonify({"message":"User does not exist"}), 401
 
-    user = g_user(email)
-    print(user[3])
-    if bcrypt.verify(hash_password,user[3]):
-        token = generate_token(email)
-        return jsonify({'token': token,'username':user[1]})
-
-    return jsonify({'message': 'Invalid credentials'}), 401
+       
+        
+        
+    
 
 
 def generate_token(email):

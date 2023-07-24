@@ -3,31 +3,20 @@ import "../Style/Header.css";
 import { FaHome } from "react-icons/fa";
 import Profile from "./Profile";
 import { useEffect } from "react";
-import { useContext } from "react";
-import { AppContext } from "../App";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-  //   const [showheader, setShowHeader] = useState();
-  //   useEffect(() => {
-  //     setShowHeader(JSON.parse(localStorage.getItem("users")));
-  //   }, []);
+  const { refresh, userToken } = useSelector((state) => state.auth);
 
-  const { viewls, setViewLS } = useContext(AppContext);
+  const userDetail = JSON.parse(localStorage.getItem("userInfo"));
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setViewLS(JSON.parse(localStorage.getItem("users")));
-    }, 100);
-    return(()=> {
-      clearTimeout(timer);
-    })
-  }, [viewls]);
-
+    localStorage.getItem("userInfo");
+  }, [userToken, refresh]);
   return (
     <>
       <nav
         className="navbar navbar-expand-lg navbar-dark"
-        style={{ background: "rgba(23,38,86,0.9)" }}
+        style={{ background: "rgba(22,22,22)" }}
       >
         <div className="container-fluid">
           <NavLink
@@ -60,7 +49,7 @@ const Header = () => {
                   </span>
                 </NavLink>
               </li>
-              {viewls ? (
+              {userDetail ? (
                 <>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="./services">
@@ -107,7 +96,7 @@ const Header = () => {
                 " "
               )}
             </ul>
-            {viewls ? (
+            {userDetail ? (
               <Profile />
             ) : (
               <NavLink className="nav-link " to="/userauth">
