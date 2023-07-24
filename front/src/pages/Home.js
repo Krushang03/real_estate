@@ -1,13 +1,22 @@
 import React from "react";
 import '../Style/Home.css'
-
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 const Home = () => {
+    const settings = {
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        speed: 3000,
+        autoplaySpeed: 3000,
+      };
     return (
         <>
             <section className="home">
-                <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
-                    <div className="carousel-inner">
+                {/* <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
+                    <div className="carousel-inner autoplay">
                         <div className="carousel-item active image img-1">
                             <div className="row black-bg d-flex justify-content-center align-items-center">
                                 <div className="col-md-6">
@@ -44,7 +53,36 @@ const Home = () => {
                             <span className="visually-hidden">Next</span>
                         </button>
                     </div>
-                </div>
+                </div> */}
+                <Slider {...settings}>
+                        <div className="image img-1">
+                            <div className="row black-bg d-flex justify-content-center align-items-center">
+                                <div className="col-md-6">
+                                    <h1 className="flex-wrap">FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE</h1>
+                                    <p className="flex-wrap">Search real estate property records, houses, condos, land and more on realestate.com®.
+                                        Find property info from the most comprehensive source data.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="image img-2">
+                            <div className="row black-bg d-flex justify-content-center align-items-center">
+                                <div className="col-md-6">
+                                    <h1 className="flex-wrap">FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE</h1>
+                                    <p className="flex-wrap">Search real estate property records, houses, condos, land and more on realestate.com®.
+                                        Find property info from the most comprehensive source data.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="image img-3">
+                            <div className="row black-bg d-flex justify-content-center align-items-center">
+                                <div className="col-md-6">
+                                    <h1 className="flex-wrap">FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE</h1>
+                                    <p className="flex-wrap">Search real estate property records, houses, condos, land and more on realestate.com®.
+                                        Find property info from the most comprehensive source data.</p>
+                                </div>
+                            </div>
+                        </div>
+                </Slider>
             </section>
             <section className="search">
                 <div className="container">
