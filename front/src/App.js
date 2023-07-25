@@ -9,14 +9,10 @@ import Services from "./pages/Services";
 import UserAuth from "./component/UserAuth";
 import Page404 from "./pages/Page404";
 import Protected from "./component/Protected";
-import { useState, createContext } from "react";
 
-export const AppContext = createContext();
 function App() {
-  const [viewls, setViewLS] = useState();
   return (
     <>
-      <AppContext.Provider value={{ viewls, setViewLS }}>
         <BrowserRouter>
           <Header />
           <Routes>
@@ -29,7 +25,6 @@ function App() {
           <Route path='/contactus' element={<Contactus />} /> */}
           </Routes>
         </BrowserRouter>
-      </AppContext.Provider>
     </>
   );
 }

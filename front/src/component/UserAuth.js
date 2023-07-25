@@ -4,14 +4,16 @@ import "../Style/UserAuth.css"
 import Login from './Login'
 import Register from './Register'
 import { useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
 
 const UserAuth = ()=> {
+    // const { userToken } = useSelector((state) => state.auth);
 
     const [user, setUser] = useState(true);
     const navigate = useNavigate();
      useEffect(()=>{
-     if(localStorage.getItem("users")){
+     if(localStorage.getItem("userInfo")){
         navigate("/")
      }
      },[])

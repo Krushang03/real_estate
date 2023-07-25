@@ -3,35 +3,24 @@ import "../Style/Header.css";
 import { FaHome } from "react-icons/fa";
 import Profile from "./Profile";
 import { useEffect } from "react";
-import { useContext } from "react";
-import { AppContext } from "../App";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-  //   const [showheader, setShowHeader] = useState();
-  //   useEffect(() => {
-  //     setShowHeader(JSON.parse(localStorage.getItem("users")));
-  //   }, []);
+  const { refresh, userToken } = useSelector((state) => state.auth);
 
-  const { viewls, setViewLS } = useContext(AppContext);
+  const userDetail = JSON.parse(localStorage.getItem("userInfo"));
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setViewLS(JSON.parse(localStorage.getItem("users")));
-    }, 100);
-    return(()=> {
-      clearTimeout(timer);
-    })
-  }, [viewls]);
-
+    localStorage.getItem("userInfo");
+  }, [userToken, refresh]);
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg navbar-dark"
-        style={{ background: "rgba(23,38,86,0.9)" }}
+        className="navbar navbar-expand-lg navbar-dark sticky-top"
+        style={{ background: "rgba(22,22,22)" }}
       >
         <div className="container-fluid">
           <NavLink
-            className="navbar-brand d-flex align-items-center"
+            className="navbar-brand d-flex align-items-center nav-txt"
             id="logotext"
             to="./"
           >
@@ -51,7 +40,7 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0 ">
               <li className="nav-item">
-                <NavLink className="nav-link" to="./">
+                <NavLink className="nav-link nav-text" to="./">
                   <span
                     data-bs-toggle="collapse"
                     data-bs-target=".navbar-collapse.show"
@@ -60,10 +49,10 @@ const Header = () => {
                   </span>
                 </NavLink>
               </li>
-              {viewls ? (
+              {userDetail ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="./services">
+                    <NavLink className="nav-link nav-text" to="./services">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
@@ -73,7 +62,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="./fetures">
+                    <NavLink className="nav-link nav-text" to="./fetures">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
@@ -83,7 +72,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="./about">
+                    <NavLink className="nav-link nav-text" to="./about">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
@@ -93,7 +82,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="./contact">
+                    <NavLink className="nav-link nav-text" to="./contact">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
@@ -107,10 +96,10 @@ const Header = () => {
                 " "
               )}
             </ul>
-            {viewls ? (
+            {userDetail ? (
               <Profile />
             ) : (
-              <NavLink className="nav-link " to="/userauth">
+              <NavLink className="nav-link nav-text" to="/userauth">
                 <button type="button" className="btn btn-outline-light swapbtn">
                   <span
                     data-bs-toggle="collapse"

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 const Protected = ({Cmp}) => {
 const navigate = useNavigate()
     useEffect(()=>{
-        if(!localStorage.getItem("users")){
+        if(!localStorage.getItem("userInfo")){
             navigate("/userauth")
         }
     },[])
