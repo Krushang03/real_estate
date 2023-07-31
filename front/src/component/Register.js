@@ -53,9 +53,7 @@ const Register = () => {
       password: data.password,
     };
 
-    // localStorage.setItem("users", JSON.stringify(result.data));
     reset();
-    // navigate("/");
     dispatch(registerUser(item));
   };
   useEffect(() => {

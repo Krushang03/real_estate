@@ -52,7 +52,7 @@ const Header = () => {
               {userDetail ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className="nav-link nav-text" to="./services">
+                    <NavLink className="nav-link nav-text" to="/services">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
@@ -62,7 +62,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link nav-text" to="./fetures">
+                    <NavLink className="nav-link nav-text" to="/features">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
@@ -72,7 +72,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link nav-text" to="./about">
+                    <NavLink className="nav-link nav-text" to="/about">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
@@ -82,7 +82,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link nav-text" to="./contact">
+                    <NavLink className="nav-link nav-text" to="/contact">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
