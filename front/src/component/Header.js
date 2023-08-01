@@ -12,6 +12,7 @@ const Header = () => {
   useEffect(() => {
     localStorage.getItem("userInfo");
   }, [userToken, refresh]);
+
   return (
     <>
       <nav

@@ -1,4 +1,5 @@
 import "./App.css";
+import {useEffect , useState} from "react"
 import Home from "../src/pages/Home";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
@@ -13,17 +14,18 @@ import Protected from "./component/Protected";
 import Addproperty from "./component/Addproperty";
 
 function App() {
+  const [show,setShow] = useState(true);
   return (
     <>
       <BrowserRouter>
-        <Header />
+        {show && <Header />}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home setShow={setShow} />} />
           <Route path="/userauth" element={<UserAuth />} />
           <Route path="/services" element={<Protected Cmp={Services} />} />
           <Route path="/features" element={<Features />} />
           <Route path="/addproperty" element={<Addproperty />} />
-          <Route path="*" element={<Page404 />} />
+          <Route path="*" element={<Page404 setShow={setShow} show={show} />} />
           {/* <Route path='/about' element={<About />} />
           <Route path='/contactus' element={<Contactus />} /> */}
         </Routes>

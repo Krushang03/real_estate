@@ -13,7 +13,7 @@
     margin-bottom: 5%;
 }
 
-.block {
+/* .block {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -28,7 +28,7 @@
     text-decoration: none;
     color: rgb(74, 107, 209);
     font-size: 18px;
-}
+} */
 .button-box {
     margin-bottom: 5%;
 }

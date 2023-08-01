@@ -90,3 +90,8 @@
         bottom: -150px;
     }
 }
+#add-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 25px;
+}

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from 'react-router-dom';
 import '../Style/Page404.css';
 
-const Page404 = () => {
+const Page404 = ({setShow, show}) => {
+    useEffect(()=>{
+        setShow(false)
+    },[])
     return (
         <>
             <div style={{ background: "#f0f0f0", minHeight: "92vh" }} className="d-flex align-items-center justify-content-center">
