@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 import jwt
 from passlib.hash import bcrypt
-from database.db import c_user, g_user, create_tables
+from database.re_lo_db import c_user, g_user
+from database.create__table import create_tables
 import uuid
 
 login_api = Blueprint('login_api', __name__)
@@ -10,29 +11,30 @@ create_tables()
 
 @login_api.post('/register')
 def register():
-    # try :
+    try :
         username = request.json.get('username')
         email = request.json.get('email')
         password = request.json.get('password')
         hash_password = bcrypt.hash(password)
         
         u_id = str(uuid.uuid4())
-    
+        
         if(len(username) == 0):
-            return ({'Message':'Please provide a username'})
+            return ({'message':'Please provide a username'}), 401
+        
         
         elif(len(email) == 0):
-            return ({'Message':'Please provide a email'})
+            return ({'message':'Please provide a email'}), 401
         
         elif(len(password) == 0):
-            return ({'Message':'Please provide a password'})
+            return ({'message':'Please provide a password'}), 401
         
         else:
             c_user(u_id,username, email, hash_password)
             token = generate_token(email)
             return jsonify({'message': 'User created successfully','token': token,'username' : username}), 201
-    # except:
-    #     return jsonify({'Message':'username or email is already used'})
+    except:
+        return jsonify({'message':'username or email is already used'}), 401
 
 
 @login_api.post('/login')
@@ -52,10 +54,7 @@ def login():
         except:
             return jsonify({"message":"User does not exist"}), 401
 
-       
-        
-        
-    
+
 
 
 def generate_token(email):
