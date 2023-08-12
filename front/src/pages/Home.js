@@ -17,6 +17,8 @@ const Home = ({setShow}) => {
     autoplay: true,
     speed: 3000,
     autoplaySpeed: 3000,
+    stopOnHover : false
+
   };
   return (
     <>

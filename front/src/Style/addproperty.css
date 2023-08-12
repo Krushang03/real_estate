@@ -1,5 +1,5 @@
 body {
-    background-color: rgba(243, 243, 244, 1);
+    /* background-color: rgba(243, 243, 244, 1); */
 }
 .block {
     background-color: white;
@@ -13,3 +13,11 @@ body {
 .errormsg2{
     color: red;
 }
+
+.btn-trash {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 2;
+}
+
