@@ -27,7 +27,7 @@ const addPropSlice = createSlice({
         state.loading = false;
         state.users = null;
         state.error = payload;
-      }
+      },
     },
   });
   

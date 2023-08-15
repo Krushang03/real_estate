@@ -29,12 +29,6 @@ const schema = yup.object({
   state_name: yup.string().required("please select state"),
   country_name: yup.string().required("please select country"),
   sell_or_rent: yup.string().required("please select one of the option"),
-  // pin_code: yup
-  //   .string()
-  //   .required()
-  //   .matches(/^[0-9]+$/, "Must be only digits")
-  //   .min(6, "Must be exactly 6 digits")
-  //   .max(6, "Must be exactly 6 digits"),
   bhk: yup.number().typeError("please enter your bhk").required(),
   prop_size: yup.number().typeError("please enter house size").required(),
   price: yup.number().typeError("please enter price").required(),
@@ -103,7 +97,6 @@ const Addproperty = () => {
       state_name: data.state_name,
       country_name: data.country_name,
       sell_or_rent: data.sell_or_rent,
-      // pin_code: data.pin_code,
       bhk: data.bhk,
       prop_size: data.prop_size,
       price: data.price,

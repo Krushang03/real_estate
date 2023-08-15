@@ -8,7 +8,6 @@ export const add_prop = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     const userDetail = JSON.parse(localStorage.getItem("userInfo"));
     const token = userDetail.token;
-    console.log(token,"hjkhk");
     try {
       const result = await axios.post(`${backendURL}/add_prop`, data, {
         headers: {
@@ -23,3 +22,5 @@ export const add_prop = createAsyncThunk(
     }
   }
 );
+
+
