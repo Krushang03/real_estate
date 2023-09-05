@@ -32,7 +32,6 @@ def a_data(p_id):
     cursor = conn.cursor()
     cursor.execute(f"SELECT * FROM property where p_id = '{p_id}'")
     data = cursor.fetchone()
-    print(data)
     conn.commit()
     cursor.close()
     conn.close()
@@ -57,3 +56,10 @@ def del_re(p_id):
     with conn.cursor() as cursor:
         cursor.execute(f"""DELETE FROM property WHERE p_id = '{p_id}' """)
     conn.commit()
+
+
+# #searching for perticular property address with help of  "country_name" or/and "city_name" or/and "state_name".
+# def searchh():
+#     conn = connection()
+#     cursor = conn.cursor()
+#     cursor.execute(f"SELECT * FROM property WHERE ")
