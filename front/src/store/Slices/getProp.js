@@ -19,7 +19,7 @@ const getpropSlice = createSlice({
       },
       [get_prop.fulfilled]: (state, { payload }) => {
         state.loading = false;
-        // state.refresh = true;
+        state.refresh = true;
         state.getusers = payload;
         state.error = null;
       },

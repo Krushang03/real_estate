@@ -15,7 +15,7 @@ export const add_prop = createAsyncThunk(
           Authorization: token,
         },
       });
-      console.log(result, "res addprop");
+      console.log(result, "res");
       return result.data;
     } catch (error) {
       console.log(error, "error from addprop");

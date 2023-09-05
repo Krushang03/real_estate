@@ -5,6 +5,7 @@ const addPropSlice = createSlice({
     name: "addprop",
     initialState: {
       users: [],
+      u_id:"",
       loading: false,
       refresh: false,
       error: null,
@@ -21,6 +22,7 @@ const addPropSlice = createSlice({
         state.loading = false;
         state.refresh = true;
         state.users = payload;
+        state.u_id = payload.U_id;
         state.error = null;
       },
       [add_prop.rejected]: (state, { payload }) => {

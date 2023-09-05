@@ -8,7 +8,7 @@ const Page404 = ({setShow, show}) => {
     },[])
     return (
         <>
-            <div style={{ background: "#f0f0f0", minHeight: "92vh" }} className="d-flex align-items-center justify-content-center">
+            <div style={{ background: "#f0f0f0", minHeight: "100vh" }} className="d-flex align-items-center justify-content-center">
                 <div>
                     <img src="https://i.ibb.co/W6tgcKQ/softcodeon.gif" className="img-fluid" alt="page_not_found" />
                     <h1 className="error-text">Whoops, We can't seem to find the resource you're looking for.</h1>

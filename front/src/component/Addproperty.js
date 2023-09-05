@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-// import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import "../Style/addproperty.css";
@@ -40,7 +40,7 @@ const Addproperty = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { refresh } = useSelector((state) => state.addprop);
+  const { refresh, loading } = useSelector((state) => state.addprop);
 
   useEffect(() => {
     if (!localStorage.getItem("userInfo")) {
@@ -87,7 +87,6 @@ const Addproperty = () => {
   });
 
   const onSubmit = (data) => {
-    // console.log(data,"gugu");
     const item = {
       Holder_name: data.Holder_name,
       mobile_no: data.mobile_no,
@@ -114,32 +113,66 @@ const Addproperty = () => {
       // }, 1000);
       dispatch(add_prop(item));
     }
+    toast.success('Successfully property added', {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   };
+
+  // const uploadimages = (e) => {
+  //   try {
+  //     if (e.target.files.length > 8) {
+  //       const err3 = "Only 8 images accepted.";
+  //       setimglenerr(err3);
+  //     } else {
+  //       for (let i = 0; i < e.target.files.length; i++) {
+  //         var reader = new FileReader();
+  //         reader.readAsDataURL(e.target.files[i]);
+  //         reader.onload = (readerEvent) => {
+  //           var imageBaseValue = readerEvent.target.result;
+  //           // imagesvalue.push({ image: imageBaseValue, id: i });
+  //           imagesvalue.push(imageBaseValue);
+  //         };
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const uploadimages = (e) => {
-    try {
-      if (e.target.files.length > 8) {
-        const err3 = "Only 8 images accepted.";
-        setimglenerr(err3);
-      } else {
-        for (let i = 0; i < e.target.files.length; i++) {
-          var reader = new FileReader();
-          reader.readAsDataURL(e.target.files[i]);
-          reader.onload = (readerEvent) => {
-            var imageBaseValue = readerEvent.target.result;
-            // imagesvalue.push({ image: imageBaseValue, id: i });
-            imagesvalue.push(imageBaseValue);
-          };
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const files = e.target.files;
+    const imagePromises = [];
 
-  const addImg = () => {
-    setimages(imagesvalue);
-  };
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file) {
+        const reader = new FileReader();
+        imagePromises.push(
+          new Promise((resolve) => {
+            reader.onload = (e) => {
+              resolve(e.target.result);
+            };
+            reader.readAsDataURL(file);
+          })
+        );
+      }
+    }
+
+    Promise.all(imagePromises).then((results) => {
+      setimages(results);
+    });
+  }
+
+  // const addImg = () => {
+  //   setimages(imagesvalue);
+  // };
 
   const errorImg = () => {
     if (images.length === 0) {
@@ -295,18 +328,18 @@ const Addproperty = () => {
                           {...register("state_name", {
                             onChange: (e) => handleCity(e.target.value),
                           })}
-                          
+
                         >
                           <option value="" defaultValue>
                             Select State
                           </option>
-                          {state.map((val) => {
+                          {state.length > 0 ? state.map((val) => {
                             return (
                               <>
-                                <option  value={val}>{val}</option>
+                                <option value={val}>{val}</option>
                               </>
                             );
-                          })}
+                          }) : <option value="" style={{ color: "red" }} disabled >please select country</option>}
                         </select>
                         <label htmlFor="floatingSelect">State</label>
                       </div>
@@ -321,16 +354,17 @@ const Addproperty = () => {
                           aria-label="Floating label select example"
                           {...register("city_name")}
                         >
-                          <option value="" defaultValue>
+                          <option value="" defaultValue >
                             Select City
                           </option>
-                          {city.map((val) => {
+                          {city.length > 0 ? city.map((val) => {
                             return (
                               <>
                                 <option value={val}>{val}</option>
                               </>
                             );
-                          })}
+                          }) : <option value="" style={{ color: "red" }} disabled >please select state</option>}
+
                         </select>
                         <label htmlFor="floatingSelect">city</label>
                       </div>
@@ -442,13 +476,13 @@ const Addproperty = () => {
                       id="uploadimg"
                       onChange={uploadimages}
                     />
-                    <button
+                    {/* <button
                       type="button"
                       className=" col-5 col-md-3 btn btn-primary"
                       onClick={addImg}
                     >
                       Add images
-                    </button>
+                    </button> */}
                   </div>
 
                   {(imgsizeerr || imglenerr || imgerr) && (
@@ -559,6 +593,7 @@ const Addproperty = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

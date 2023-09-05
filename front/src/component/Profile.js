@@ -1,6 +1,6 @@
 import "../Style/Profile.css";
-import { FaUser } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { FaUser, FaBuilding } from "react-icons/fa";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ThreeDots } from "react-loader-spinner";
 import { Logout } from "../store/Slices/auth";
@@ -9,9 +9,9 @@ import { useDispatch } from "react-redux";
 
 const Profile = () => {
   const { loading } = useSelector((state) => state.auth);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const userDetail = JSON.parse(localStorage.getItem("userInfo"));
 
   const LogoutUser = () => {
@@ -31,9 +31,18 @@ const Profile = () => {
           <FaUser style={{ fontSize: "14px" }} />
         </button>
         <ul className="dropdown-menu">
-          <li className="dropdown-item d-flex justify-content-evenly">
-            {userDetail?.username}
+          <li className="dropdown d-flex justify-content-center p-2">
+            <div><FaUser style={{ fontSize: "18px" }} /></div>
+            <div className="ps-2">{userDetail?.username}</div>
           </li>
+          <li>
+            <hr className="dropdown-divider" />
+          </li>
+          <NavLink to="/myproperty" style={{textDecoration:"none"}}>
+            <li className="dropdown d-flex justify-content-center p-2" style={{color:"black"}}>
+              <div><FaBuilding style={{ fontSize: "18px" }} />My properties</div>
+            </li>
+          </NavLink>
           <li>
             <hr className="dropdown-divider" />
           </li>

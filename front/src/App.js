@@ -11,7 +11,9 @@ import UserAuth from "./component/UserAuth";
 import Page404 from "./pages/Page404";
 import Features from "./pages/Features.js";
 import Protected from "./component/Protected";
+import SingleProperty from "./pages/SingleProperty";
 import Addproperty from "./component/Addproperty";
+import MyProperty from "./component/MyProperty";
 
 function App() {
   const [show,setShow] = useState(true);
@@ -22,7 +24,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home setShow={setShow} />} />
           <Route path="/userauth" element={<UserAuth />} />
-          <Route path="/services" element={<Protected Cmp={Services} />} />
+          <Route path="/property/:id" element={<SingleProperty/>}/>
+          <Route path="/myproperty" element={<MyProperty />} />
+          {/* <Route path="/services" element={<Protected Cmp={Services} />} /> */}
           <Route path="/features" element={<Features />} />
           <Route path="/addproperty" element={<Addproperty />} />
           <Route path="*" element={<Page404 setShow={setShow} show={show} />} />
