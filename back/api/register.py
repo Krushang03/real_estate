@@ -31,7 +31,7 @@ def register():
         
         else:
             c_user(u_id,username, email, hash_password)
-            token = generate_token(email)
+            token = generate_token(u_id)
             return jsonify({'message': 'User created successfully','token': token,'username' : username}), 201
     except:
         return jsonify({'message':'username or email is already used'}), 401
@@ -39,14 +39,15 @@ def register():
 
 @login_api.post('/login')
 def login():
-    
         email = request.json.get('email')
         hash_password = request.json.get('password')
+        user = g_user(email)
+        u_id =  user[0]
         try:
-            user = g_user(email)
+            print(user)
             if(email==user[2]):
                 if bcrypt.verify(hash_password,user[3]):
-                    token = generate_token(email)
+                    token = generate_token(u_id)
                     return jsonify({'token': token,'username':user[1]}), 200
                 else:
                     return jsonify({'message': 'Password does not match'}), 401
@@ -57,10 +58,10 @@ def login():
 
 
 
-def generate_token(email):
+def generate_token(u_id):
     secret_key = 'thisismysecreatekey'
 
-    payload = {'email': email}
+    payload = {'u_id': u_id}
     token = jwt.encode(payload, secret_key, algorithm='HS256')
 
     return token
