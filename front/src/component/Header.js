@@ -63,12 +63,12 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link nav-text" to="/features">
+                    <NavLink className="nav-link nav-text" to="/allproperty">
                       <span
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
                       >
-                        Features
+                        All Properties
                       </span>
                     </NavLink>
                   </li>

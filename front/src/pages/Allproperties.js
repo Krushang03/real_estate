@@ -12,6 +12,7 @@ const Features = () => {
   useEffect(() => {
     dispatch(get_prop());
   }, []);
+  
   useEffect(() => {
     if (getusers) {
       setitem(getusers)
@@ -35,7 +36,7 @@ const Features = () => {
                 <div className="col-md-3 rounded m-3" style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} key={item.index}>
                   <NavLink to={`/property/${curval.p_id}`} style={{ textDecoration: "none", color: "black" }}>
                     <ul style={{ listStyle: "none" }}>
-                      <img src={curval.photo[0]} className="img-fluid" style={{}} alt="house_photo" />
+                      <img src={curval.photo[0]} className="img-fluid" alt="house_photo" />
                       <li> price : {curval.price}</li>
                       <li>bhk : {curval.bhk}</li>
                       <li>property size : {curval.prop_size}</li>

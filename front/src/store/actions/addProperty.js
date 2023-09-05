@@ -16,6 +16,7 @@ export const add_prop = createAsyncThunk(
         },
       });
       console.log(result, "res");
+      // localStorage.setItem(result.data.U_id ,"U_id")
       return result.data;
     } catch (error) {
       console.log(error, "error from addprop");

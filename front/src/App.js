@@ -9,7 +9,7 @@ import Header from "./component/Header";
 import Services from "./pages/Services";
 import UserAuth from "./component/UserAuth";
 import Page404 from "./pages/Page404";
-import Features from "./pages/Features.js";
+import Features from "./pages/Allproperties.js";
 import Protected from "./component/Protected";
 import SingleProperty from "./pages/SingleProperty";
 import Addproperty from "./component/Addproperty";
@@ -27,7 +27,7 @@ function App() {
           <Route path="/property/:id" element={<SingleProperty/>}/>
           <Route path="/myproperty" element={<MyProperty />} />
           {/* <Route path="/services" element={<Protected Cmp={Services} />} /> */}
-          <Route path="/features" element={<Features />} />
+          <Route path="/allproperty" element={<Features />} />
           <Route path="/addproperty" element={<Addproperty />} />
           <Route path="*" element={<Page404 setShow={setShow} show={show} />} />
           {/* <Route path='/about' element={<About />} />

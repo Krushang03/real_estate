@@ -39,14 +39,15 @@ const schema = yup.object({
 const Addproperty = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { refresh, loading } = useSelector((state) => state.addprop);
+  const { refresh, loading  } = useSelector((state) => state.addprop);
 
   useEffect(() => {
     if (!localStorage.getItem("userInfo")) {
       navigate("/userauth");
     }
   }, []);
+
+
 
   var imagesvalue = [];
   var empty = [];
@@ -108,10 +109,10 @@ const Addproperty = () => {
     if (images.length > 0) {
       reset();
       setimages(empty);
-      // setTimeout(() => {
-      //   // navigate("/");
-      // }, 1000);
       dispatch(add_prop(item));
+      setTimeout(() => {
+        navigate("/myproperty");
+      }, 500);
     }
     toast.success('Successfully property added', {
       position: "top-right",

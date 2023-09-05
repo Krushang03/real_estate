@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { add_prop } from "../actions/addProperty";
+import { my_prop } from "../actions/myProperty";
 
 const myPropSlice = createSlice({
     name: "myprop",
@@ -11,17 +11,17 @@ const myPropSlice = createSlice({
     },
     reducers: {},
     extraReducers: {
-        [add_prop.pending]: (state, action) => {
+        [my_prop.pending]: (state, action) => {
             state.loading = true;
             state.usersprop = null;
             state.error = null;
         },
-        [add_prop.fulfilled]: (state, { payload }) => {
+        [my_prop.fulfilled]: (state, { payload }) => {
             state.loading = false;
             state.usersprop = payload;
             state.error = null;
         },
-        [add_prop.rejected]: (state, { payload }) => {
+        [my_prop.rejected]: (state, { payload }) => {
             state.loading = false;
             state.usersprop = null;
             state.error = payload;

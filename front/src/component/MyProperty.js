@@ -6,22 +6,30 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 const MyProperty = () => {
-    const { loading } = useSelector((state) => state.auth);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+  const { usersprop } = useSelector((state) => state.myprop);
+  const { u_id } = useSelector((state) => state.addprop);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [uid, setuid] = useState("")
 
-    useEffect(() => {
-        dispatch(my_prop());
-      }, []);
-    
-      // useEffect(() => {
-      //   if (getusers) {
-      //     setitem(getusers)
-      //   }
-      // }, [my_prop])
+  useEffect(() => {
+    setuid(u_id)
+    console.log(uid, "uid");
+  }, [u_id])
+
+  useEffect(() => {
+    dispatch(my_prop());
+  }, []);
+
+
+  // useEffect(() => {
+  //   if (getusers) {
+  //     setitem(getusers)
+  //   }
+  // }, [my_prop]) 
   return (
     <div>
-      
+
     </div>
   )
 }
