@@ -111,7 +111,7 @@ const Addproperty = () => {
       setimages(empty);
       dispatch(add_prop(item));
       setTimeout(() => {
-        navigate("/myproperty");
+        navigate("/allproperty");
       }, 500);
     }
     toast.success('Successfully property added', {
@@ -499,7 +499,7 @@ const Addproperty = () => {
                         return (
                           <>
                             <div
-                              className="col-md-4 position-relative"
+                              className="col-md-4 position-relative mb-4"
                               key={index}
                             >
                               <img

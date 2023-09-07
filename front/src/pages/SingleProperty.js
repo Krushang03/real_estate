@@ -7,6 +7,7 @@ const SingleProperty = () => {
   const dispatch = useDispatch()
   const { singleuser } = useSelector((state) => state.singleprop);
   const [item, setitem] = useState([])
+  const [imgs, setimgs] = useState([])
   const { id } = useParams();
 
   useEffect(() => {
@@ -18,20 +19,27 @@ const SingleProperty = () => {
       setitem(singleuser)
     }
   }, [singleuser])
-  const img = [item.photo];
-  console.log(img);
+
+  useEffect(() => {
+    setimgs(item.photo)
+  }, [item])
+
   return (
-    <div>
-      {img.length > 0 ?
-        img.map((e, i) => {
-          return (
-            <>
-              <img src={e} alt="image_property" key={i} className='img-fluid' />
-            </>
-          )
-        })
-        : ""
-      }
+    <>
+      <div>
+        <div className="col-12">
+          <div className="row d-flex justify-content-evenly m-0"></div>
+          {imgs &&
+            imgs.map((e, i) => {
+              return (
+                <>
+                  <img src={e} alt="image_property" className='img-fluid col-md-4' width={200} />
+                </>
+              )
+            })
+          }
+        </div>
+      </div>
       <p> name : {item.Holder_name}</p>
       <p> area name : {item.area_name}</p>
       <p> state name : {item.state_name}</p>
@@ -45,7 +53,7 @@ const SingleProperty = () => {
       <p> price : {item.price}</p>
       <p> rent_or_sell : {item.rent_or_sell}</p>
       <p> prop_size : {item.prop_size}</p>
-    </div>
+    </>
   )
 }
 

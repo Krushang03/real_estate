@@ -6,7 +6,7 @@ import { get_prop } from "../store/actions/getPropAction.js";
 const Features = () => {
   const { getusers } = useSelector((state) => state.getprop);
   const [item, setitem] = useState([])
-  const [limit, setlimit] = useState(3)
+  // const [limit, setlimit] = useState(3)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -18,6 +18,7 @@ const Features = () => {
       setitem(getusers)
     }
   }, [getusers])
+
   const viewProduct = () => {
 
   }
@@ -31,7 +32,7 @@ const Features = () => {
       <div className="col-md-12">
         <div className="row d-flex justify-content-evenly m-5">
           {item.length > 0 ?
-            item.slice(0, limit).map((curval, index) => (
+            item.slice(0).reverse().map((curval, index) => (
               <>
                 <div className="col-md-3 rounded m-3" style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} key={item.index}>
                   <NavLink to={`/property/${curval.p_id}`} style={{ textDecoration: "none", color: "black" }}>
@@ -51,9 +52,9 @@ const Features = () => {
             : ("")
           }
         </div>
-        <div className='col-12'>
+        {/* <div className='col-12'>
           <button type='button' className='btn btn-primary w-100' onClick={() => setlimit(limit + 3)}>load more</button>
-        </div>
+        </div> */}
       </div>
     </>
   );
