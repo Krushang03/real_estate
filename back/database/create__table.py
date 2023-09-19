@@ -2,12 +2,18 @@ from database.connectionn import connection
 def create_tables():
     conn = connection()
     cursor = conn.cursor()
+    #users table
     cursor.execute("""CREATE TABLE IF NOT EXISTS users (
                         u_id varchar(1000) primary key,
                         username VARCHAR(100) NOT NULL,
-                        email VARCHAR(100) NOT NULL,
-                        password VARCHAR(100) NOT NULL)   
+                        email VARCHAR(100) unique NOT NULL,
+                        password VARCHAR(100) NOT NULL,  
+                        mobile_no numeric NOT NULL,
+                        photo text[] NOT NULL,
+                        otp int
+                        )   
     """)
+    #property table
     cursor.execute("""CREATE TABLE IF NOT EXISTS property(
                         p_id varchar(1000) not null,
                         u_id varchar(1000) not null,
@@ -23,8 +29,11 @@ def create_tables():
                         prop_size numeric not null,
                         price numeric not null,
                         furniture char(30) not null,
-                        rent_or_sell varchar(10) not null,
-                        dis varchar(1000))
+                        sell_or_rent char(10) not null,
+                        dis varchar(1000) not null,
+                        prop_deal boolean not null,
+                        prop_type char(50) not null,
+                        ddate varchar(20))
                         """)
     conn.commit()
     cursor.close()
