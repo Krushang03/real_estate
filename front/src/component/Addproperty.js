@@ -39,7 +39,7 @@ const schema = yup.object({
 const Addproperty = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { refresh, loading  } = useSelector((state) => state.addprop);
+  const { refresh, loading } = useSelector((state) => state.addprop);
 
   useEffect(() => {
     if (!localStorage.getItem("userInfo")) {
@@ -104,26 +104,15 @@ const Addproperty = () => {
       dis: data.dis,
       photo: images,
     };
-
     console.log(item, "item");
     if (images.length > 0) {
       reset();
       setimages(empty);
       dispatch(add_prop(item));
-      setTimeout(() => {
-        navigate("/allproperty");
-      }, 500);
+      // setTimeout(() => {
+      //   navigate("/allproperty");
+      // }, 500);
     }
-    toast.success('Successfully property added', {
-      position: "top-right",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
   };
 
   // const uploadimages = (e) => {
@@ -475,6 +464,7 @@ const Addproperty = () => {
                       type="file"
                       className="form-control"
                       id="uploadimg"
+                      // style={{display:"none"}}
                       onChange={uploadimages}
                     />
                     {/* <button
@@ -594,7 +584,6 @@ const Addproperty = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

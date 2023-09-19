@@ -8,34 +8,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../store/actions/authAction";
 import { ThreeDots } from "react-loader-spinner";
 
+const schema = yup.object().shape({
+  username: yup
+    .string()
+    .min(
+      4,
+      "Please Enter your username and it must be at least 4 characters "
+    )
+    .required(),
+  email: yup.string().email().required("Please Enter your Email"),
+  mobile_no: yup.string()
+    .required("please enter your contact number")
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(10, "Must be exactly 10 digits")
+    .max(10, "Must be exactly 10 digits"),
+  password: yup
+    .string()
+    .min(6)
+    .required("Please enter your password"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "password does not match")
+    .required(""),
+});
+
 const Register = () => {
   const { loading, error, success } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const schema = yup.object().shape({
-    username: yup
-      .string()
-      .min(
-        4,
-        "Please Enter your username and it must be at least 4 characters "
-      )
-      .required(),
-    email: yup.string().email().required("Please Enter your Email"),
-    password: yup
-      .string()
-      .required("Please enter your password")
-      .matches(
-        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-        "Password must contain at least 8 characters, one uppercase, one number and one special case character"
-      ),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "password does not match")
-      .required(""),
-  });
 
   const {
     register,
@@ -46,21 +48,65 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
 
+  const [imgerr, setimgerr] = useState("")
+  const [img, setimg] = useState("")
+
   const onSubmit = (data) => {
     const item = {
       username: data.username,
       email: data.email,
       password: data.password,
+      photo: img,
+      mobile_no: data.mobile_no
     };
-
+    console.log(item);
     reset();
-    dispatch(registerUser(item));
+    setimg("")
+    if (img) {
+      dispatch(registerUser(item));
+    }
   };
   useEffect(() => {
     if (success) {
       navigate("/");
     }
-  },[success]);
+  }, [success]);
+
+  const errorImg = () => {
+    if (img?.length === 0) {
+      const err2 = "You need to provide an image";
+      setimgerr(err2);
+    }
+  };
+  useEffect(() => {
+    if (img) {
+      setimgerr("")
+    }
+  }, [img])
+  console.log(img);
+  const uploadimages = (e) => {
+    const files = e.target.files;
+    const imagePromises = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file) {
+        const reader = new FileReader();
+        imagePromises.push(
+          new Promise((resolve) => {
+            reader.onload = (e) => {
+              resolve(e.target.result);
+            };
+            reader.readAsDataURL(file);
+          })
+        );
+      }
+    }
+
+    Promise.all(imagePromises).then((results) => {
+      setimg(results);
+    });
+  }
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -80,7 +126,7 @@ const Register = () => {
         ) : (
           ""
         )}
-        <div className="form-floating mb-3">
+        <div className="form-floating mb-4">
           <input
             type="text"
             className="form-control from-ctr"
@@ -94,8 +140,7 @@ const Register = () => {
           </label>
           <p style={{ color: "red" }}>{errors.username?.message}</p>
         </div>
-
-        <div className="form-floating mb-3">
+        <div className="form-floating mb-4">
           <input
             type="email"
             className="form-control from-ctr"
@@ -109,8 +154,46 @@ const Register = () => {
           </label>
           <p style={{ color: "red" }}>{errors.email?.message}</p>
         </div>
+        <div className="row d-flex align-items-center">
+          <div className="col-md-6 form-floating d-flex">
+            <input
+              type="int"
+              maxLength={10}
+              className="form-control from-ctr"
+              id="floatingInput"
+              placeholder="name@example.com"
+              autoComplete="off"
+              {...register("mobile_no")}
+            />
+            <label htmlFor="floatingInput" style={{ fontSize: "18px", paddingLeft: "20px" }}>
+              Phone No.
+            </label>
+          </div>
 
-        <div className="form-floating mb-3">
+          <label htmlFor="uploadimg" className="btn btn-outline-dark col-md-6 rounded d-flex align-items-center justify-content-center"
+            style={{ color: "black", cursor: "pointer", height: "55px", fontSize: "18px" }}>Upload Profile imaage</label>
+          <div className="d-flex">
+
+            <p style={{ color: "red" }} className="col-md-6">{errors.mobile_no?.message}</p>
+            <p style={{ color: "red" }} className="col-md-6">{imgerr}</p>
+          </div>
+          <div className="col-md-6 d-flex align-items-center">
+            <input
+              accept=".jpg,.jpeg,.png"
+              type="file"
+              className="form-control from-ctr"
+              id="uploadimg"
+              style={{ display: "none" }}
+              onChange={uploadimages}
+            />
+          </div>
+        </div>
+        <div col-12>
+          {img && <img src={img[0]} alt="profile-img" className="col-md-6 img-fluid  rounded-thumbnail mx-auto" />}
+
+        </div>
+
+        <div className="form-floating mb-4">
           <input
             type={passwordShown ? "text" : "password"}
             className="form-control from-ctr"
@@ -125,7 +208,7 @@ const Register = () => {
           <p style={{ color: "red" }}>{errors.password?.message}</p>
         </div>
 
-        <div className="form-floating mb-3">
+        <div className="form-floating mb-4">
           <input
             type={passwordShown ? "text" : "password"}
             className="form-control from-ctr"
@@ -156,6 +239,7 @@ const Register = () => {
         <button
           className="btn form-control btn-login d-flex justify-content-center"
           type="submit"
+          onClick={errorImg}
         >
           {loading ? (
             <ThreeDots

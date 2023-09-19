@@ -68,7 +68,7 @@ const Home = ({ setShow }) => {
         >
           <div className="image" id="img-1">
             <div className="black-bg d-flex justify-content-center align-items-center">
-              <div>
+              <div className="d-md-block d-none">
                 <h1 className="flex-wrap">
                   FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE
                 </h1>
@@ -82,7 +82,7 @@ const Home = ({ setShow }) => {
           </div>
           <div className="image" id="img-2">
             <div className="black-bg d-flex justify-content-center align-items-center">
-              <div>
+              <div className="d-md-block d-none">
                 <h1 className="flex-wrap">
                   FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE
                 </h1>
@@ -96,7 +96,7 @@ const Home = ({ setShow }) => {
           </div>
           <div className="image" id="img-3">
             <div className="black-bg d-flex justify-content-center align-items-center">
-              <div>
+              <div className="d-md-block d-none">
                 <h1 className="flex-wrap">
                   FIND YOUR PLACE WITH OUR LOCAL LIFE STYLE
                 </h1>
@@ -109,9 +109,7 @@ const Home = ({ setShow }) => {
             </div>
           </div>
         </Carousel>
-      </section>
-      <section className="search">
-        <div className="container">
+        <div className="search">
           <div className="row form_search d-flex justify-content-evenly align-items-center">
             <div className="col-md-3">
               <input
@@ -197,19 +195,20 @@ const Home = ({ setShow }) => {
               <button
                 type="button"
                 className="btn btn-outline-light form-control"
-                style={{ padding: "8px"}}
+                style={{ padding: "8px" }}
               >
-                 <p style={{ fontSize: "25px",margin:"0px" }} className="d-flex align-items-center justify-content-center">Search</p>
+                <p style={{ fontSize: "25px", margin: "0px" }} className="d-flex align-items-center justify-content-center">Search</p>
               </button>
             </div>
           </div>
         </div>
         <NavLink className="nav-link nav-text" to="/addproperty">
           <button className="btn btn-dark btn-lg  d-flex align-items-center p-3" id="add-btn">
-            <FaPlus/>
+            <FaPlus />
           </button>
         </NavLink>
       </section>
+
     </>
   );
 };

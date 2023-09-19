@@ -28,19 +28,22 @@ const Profile = () => {
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <FaUser style={{ fontSize: "14px" }} />
+          {/* <img src="../images/user-profile.jpg" className="img-fluid rounded-circle" alt="img_profile" width={40} /> */}
+          <FaUser style={{ fontSize: "18px" }} />
         </button>
         <ul className="dropdown-menu">
-          <li className="dropdown d-flex justify-content-center p-2">
-            <div><FaUser style={{ fontSize: "18px" }} /></div>
-            <div className="ps-2">{userDetail?.username}</div>
-          </li>
+          <NavLink to="/yourprofile" className="" style={{textDecoration:"none", color:"black"}}>
+            <li className="dropdown d-flex justify-content-center p-2 colorhover">
+              <div><FaUser style={{ fontSize: "18px" }} /></div>
+              <div className="ps-2">My Profile</div>
+            </li>
+          </NavLink>
           <li>
             <hr className="dropdown-divider" />
           </li>
-          <NavLink to="/myproperty" style={{textDecoration:"none"}}>
-            <li className="dropdown d-flex justify-content-center p-2" style={{color:"black"}}>
-              <div><FaBuilding style={{ fontSize: "18px" }} />My properties</div>
+          <NavLink to="/myproperty" style={{ textDecoration: "none" }}>
+            <li className="dropdown d-flex justify-content-center p-2 " style={{ color: "black" }}>
+              <div className="colorhover"><FaBuilding style={{ fontSize: "18px" }} />My properties</div>
             </li>
           </NavLink>
           <li>

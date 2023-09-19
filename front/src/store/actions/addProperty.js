@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import {  toast } from 'react-toastify';
 
 const backendURL = "http://127.0.0.1:5000";
 
@@ -15,8 +16,18 @@ export const add_prop = createAsyncThunk(
           Authorization: token,
         },
       });
-      console.log(result, "res");
-      // localStorage.setItem(result.data.U_id ,"U_id")
+      toast.success('Successfully property added', {
+        position: "top-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    
+      
       return result.data;
     } catch (error) {
       console.log(error, "error from addprop");

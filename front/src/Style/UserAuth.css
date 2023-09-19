@@ -13,6 +13,10 @@
     margin-bottom: 5%;
 }
 
+body{
+    background-color: white !important;
+}
+
 /* .block {
     display: flex;
     align-items: center;

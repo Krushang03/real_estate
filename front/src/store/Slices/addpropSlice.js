@@ -4,7 +4,6 @@ import { add_prop } from "../actions/addProperty";
 const addPropSlice = createSlice({
     name: "addprop",
     initialState: {
-      u_id:"",
       loading: false,
       refresh: false,
       error: null,
@@ -19,7 +18,6 @@ const addPropSlice = createSlice({
       [add_prop.fulfilled]: (state, { payload }) => {
         state.loading = false;
         state.refresh = true;
-        state.u_id = payload.U_id;
         state.error = null;
       },
       [add_prop.rejected]: (state, { payload }) => {

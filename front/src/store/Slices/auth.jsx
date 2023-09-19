@@ -7,7 +7,7 @@ const initialState = {
   userToken: null,
   error: null,
   success: false,
-  refresh:false
+  refresh: false
 };
 
 const authSlice = createSlice({
@@ -17,22 +17,36 @@ const authSlice = createSlice({
     Logout: (state) => {
       state.userToken = null;
       state.success = false;
-      state.refresh=true;
+      state.refresh = true;
       localStorage.clear();
     },
   },
   extraReducers: {
-    [registerUser.pending || loginUser.pending]: (state) => {
+    [registerUser.pending]: (state) => {
       state.loading = true;
       state.error = null;
     },
-    [registerUser.fulfilled || loginUser.fulfilled]: (state, { payload }) => {
+    [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true;
       state.userInfo = payload;
       state.userToken = payload.token;
     },
-    [registerUser.rejected || loginUser.rejected]: (state, action) => {
+    [registerUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [loginUser.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.userInfo = payload;
+      state.userToken = payload.token;
+    },
+    [loginUser.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

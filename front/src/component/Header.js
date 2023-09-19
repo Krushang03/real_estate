@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import "../Style/Header.css";
-import { FaHome } from "react-icons/fa";
+import  logo  from "../images/logo.png";
 import Profile from "./Profile";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+
 
 const Header = () => {
   const { refresh, userToken } = useSelector((state) => state.auth);
@@ -17,7 +18,7 @@ const Header = () => {
     <>
       <nav
         className="navbar navbar-expand-lg navbar-dark sticky-top"
-        style={{ background: "rgba(22,22,22)" }}
+        style={{ background: "#000" }}
       >
         <div className="container-fluid">
           <NavLink
@@ -25,7 +26,7 @@ const Header = () => {
             id="logotext"
             to="./"
           >
-            <FaHome /> <span>RealEstate</span>
+            <img src={logo} style={{maxWidth:"140px"}} alt="logo" />
           </NavLink>
           <button
             className="navbar-toggler"
@@ -68,7 +69,7 @@ const Header = () => {
                         data-bs-toggle="collapse"
                         data-bs-target=".navbar-collapse.show"
                       >
-                        All Properties
+                        Properties
                       </span>
                     </NavLink>
                   </li>

@@ -14,6 +14,9 @@ import Protected from "./component/Protected";
 import SingleProperty from "./pages/SingleProperty";
 import Addproperty from "./component/Addproperty";
 import MyProperty from "./component/MyProperty";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import YourProfile from "./pages/YourProfile";
 
 function App() {
   const [show,setShow] = useState(true);
@@ -26,6 +29,7 @@ function App() {
           <Route path="/userauth" element={<UserAuth />} />
           <Route path="/property/:id" element={<SingleProperty/>}/>
           <Route path="/myproperty" element={<MyProperty />} />
+          <Route path="/yourprofile" element={<YourProfile />} />
           {/* <Route path="/services" element={<Protected Cmp={Services} />} /> */}
           <Route path="/allproperty" element={<Features />} />
           <Route path="/addproperty" element={<Addproperty />} />
@@ -33,6 +37,7 @@ function App() {
           {/* <Route path='/about' element={<About />} />
           <Route path='/contactus' element={<Contactus />} /> */}
         </Routes>
+        <ToastContainer/>
       </BrowserRouter>
     </>
   );

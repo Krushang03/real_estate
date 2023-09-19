@@ -4,6 +4,9 @@ import addpropSlice from "./Slices/addpropSlice";
 import getpropSlice from "./Slices/getProp";
 import myPropertySlice from "./Slices/myPropertySlice";
 import singlePropertySlice from "./Slices/singlePropertySlice";
+import GetUpdateProfileSlice from "./Slices/profilegetupdateSlice"
+import UpdatePasswordSlice from "./Slices/passwordSlice";
+
 
 const store = configureStore({
   reducer: {
@@ -11,7 +14,9 @@ const store = configureStore({
     addprop: addpropSlice,
     getprop: getpropSlice,
     myprop: myPropertySlice,
-    singleprop: singlePropertySlice
+    singleprop: singlePropertySlice,
+    getupdateprofile: GetUpdateProfileSlice,
+    password: UpdatePasswordSlice,
   },
 });
 export default store;
