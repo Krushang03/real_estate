@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { GetProfileAction } from '../store/actions/profilegetupdate'
 import { UpdateProfileAction } from '../store/actions/profilegetupdate'
@@ -8,25 +8,29 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 
 
-
 const EditProfile = () => {
+    const { profiledata } = useSelector((state) => state.getupdateprofile)
+    const [profileitem, setprofileitem] = useState()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [img, setimg] = useState()
+
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm({
-        resolver: yupResolver(),
-    });
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const { profiledata } = useSelector((state) => state.getupdateprofile)
-    const [profileitem, setprofileitem] = useState()
-    const [img, setimg] = useState()
-
+        setValue,
+    } = useForm({});
     const newData = (e) => {
         setprofileitem({ ...profileitem, [e.target.name]: e.target.value });
     };
+    console.log(profileitem);
+    useEffect(() => {
+        setValue("mobile_no", profileitem?.mobile_no);
+        setValue("Username", profileitem?.Username);
+        setValue("email", profileitem?.email)
+    }, [profileitem])
 
     useEffect(() => {
         dispatch(GetProfileAction())
@@ -41,6 +45,7 @@ const EditProfile = () => {
     useEffect(() => {
         setprofileitem({ ...profileitem, photo: img });
     }, [img])
+
 
     const uploadimages = (e) => {
         const files = e.target.files;
@@ -65,13 +70,15 @@ const EditProfile = () => {
             setimg(results);
         });
     }
-
     const onSubmit = (data) => {
-
-    }
-    const updateprofiledata = () => {
+        const item = {
+            username: profileitem?.Username,
+            mobile_no: profileitem?.mobile_no,
+            email: profileitem?.email,
+            photo: img
+        }
         if (profileitem) {
-            dispatch(UpdateProfileAction(profileitem))
+            dispatch(UpdateProfileAction(item))
         }
     }
     return (
@@ -104,8 +111,8 @@ const EditProfile = () => {
                         id="floatingInput"
                         placeholder="name@example.com"
                         autoComplete="off"
-                        defaultValue={profileitem && profileitem?.Username}
-                        {...register("username")}
+                        pattern="[A-Za-z0-9_]{1,15}"
+                        {...register("Username")}
                         onChange={profileitem && newData}
                     />
                     <label htmlFor="floatingInput" style={{ fontSize: "18px" }}>
@@ -120,7 +127,6 @@ const EditProfile = () => {
                         id="floatingInput"
                         placeholder="name@example.com"
                         autoComplete="off"
-                        defaultValue={profileitem && profileitem?.email}
                         {...register("email")}
                         onChange={profileitem && newData}
                     />
@@ -134,11 +140,12 @@ const EditProfile = () => {
                         type="int"
                         maxLength={10}
                         minLength={10}
+                        pattern="[0-9]{10}"
+                        min={10}
                         className="form-control from-ctr"
                         id="floatingInput"
                         placeholder="name@example.com"
                         autoComplete="off"
-                        defaultValue={profileitem && profileitem?.mobile_no}
                         {...register("mobile_no")}
                         onChange={profileitem && newData}
                     />
@@ -146,7 +153,12 @@ const EditProfile = () => {
                         Phone No.
                     </label>
                 </div>
-                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" onClick={updateprofiledata} >Save changes</button>
+                <div className="d-flex justify-content-between">
+                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal"
+                    >
+                        Save changes</button>
+                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal"  >cancel</button>
+                </div>
             </form>
         </div>
     )

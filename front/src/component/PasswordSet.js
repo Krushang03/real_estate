@@ -1,44 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
+import { useForm } from "react-hook-form"
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { ResetPasswordAction } from '../store/actions/password';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { ForgotPasswordAction } from '../store/actions/password';
 
-const schema = yup.object().shape({
-    password: yup
-        .string()
-        .min(6)
-        .required("Please enter your password"),
-    confirmPassword: yup
-        .string()
-        .oneOf([yup.ref("password"), null], "password does not match")
-        .required(""),
+const schema = yup.object({
+    password: yup.string().required(),
+    confirm_password: yup.string().label('confirm password').required().oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
-const ResetPassword = () => {
-    const dispatch = useDispatch()
+
+
+const Passwordset = () => {
+    const { token } = useSelector((state) => state.password)
+
     const {
         register,
         handleSubmit,
         formState: { errors },
-        reset,
     } = useForm({
         resolver: yupResolver(schema),
     });
-
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const onSubmit = (data) => {
-        reset();
-        const item = {
-            password: data.password
+        const passtoken = {
+            password: data.password,
+            token
         }
-        console.log(item);
-        dispatch(ResetPasswordAction(item))
+        dispatch(ForgotPasswordAction(passtoken))
+        // navigate("/userauth")
     }
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-floating mb-4">
+                <div className="form-floating col-md-12 mt-3 mx-auto">
                     <input
                         type="password"
                         className="form-control from-ctr"
@@ -52,25 +50,24 @@ const ResetPassword = () => {
                     </label>
                     <p style={{ color: "red" }}>{errors.password?.message}</p>
                 </div>
-
-                <div className="form-floating mb-4">
+                <div className="form-floating col-md-12 mx-auto">
                     <input
                         type="password"
                         className="form-control from-ctr"
                         id="floatingInput"
                         placeholder="name@example.com"
                         autoComplete="off"
-                        {...register("confirmPassword")}
+                        {...register("confirm_password")}
                     />
                     <label htmlFor="floatingInput" style={{ fontSize: "18px" }}>
                         Confirm Password
                     </label>
-                    <p style={{ color: "red" }}>{errors.confirmPassword?.message}</p>
+                    <p style={{ color: "red" }}>{errors.confirm_password?.message}</p>
                 </div>
-                <button type="submit" className="btn btn-primary form-control" data-bs-dismiss={(errors.confirmPassword?.message || errors.password?.message) ? "" : "modal"} >Reset Password</button>
+                <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
         </div>
     )
 }
 
-export default ResetPassword
+export default Passwordset

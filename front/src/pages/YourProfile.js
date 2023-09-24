@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GetProfileAction } from '../store/actions/profilegetupdate'
 import EditProfile from './EditProfile'
 import ResetPassword from '../component/ResetPassword'
+import { NavLink } from 'react-router-dom'
 
 const YourProfile = () => {
 

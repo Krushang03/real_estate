@@ -154,8 +154,8 @@ const Register = () => {
           </label>
           <p style={{ color: "red" }}>{errors.email?.message}</p>
         </div>
-        <div className="row d-flex align-items-center">
-          <div className="col-md-6 form-floating d-flex">
+        <div className="d-flex align-items-center col-12">
+          <div className="col-8 form-floating d-flex align-items-center">
             <input
               type="int"
               maxLength={10}
@@ -165,28 +165,27 @@ const Register = () => {
               autoComplete="off"
               {...register("mobile_no")}
             />
-            <label htmlFor="floatingInput" style={{ fontSize: "18px", paddingLeft: "20px" }}>
+            <label htmlFor="floatingInput" style={{ fontSize: "18px" }}>
               Phone No.
             </label>
           </div>
 
-          <label htmlFor="uploadimg" className="btn btn-outline-dark col-md-6 rounded d-flex align-items-center justify-content-center"
-            style={{ color: "black", cursor: "pointer", height: "55px", fontSize: "18px" }}>Upload Profile imaage</label>
-          <div className="d-flex">
-
-            <p style={{ color: "red" }} className="col-md-6">{errors.mobile_no?.message}</p>
-            <p style={{ color: "red" }} className="col-md-6">{imgerr}</p>
-          </div>
-          <div className="col-md-6 d-flex align-items-center">
-            <input
-              accept=".jpg,.jpeg,.png"
-              type="file"
-              className="form-control from-ctr"
-              id="uploadimg"
-              style={{ display: "none" }}
-              onChange={uploadimages}
-            />
-          </div>
+          <label htmlFor="uploadimg" className="btn btn-outline-dark col-4 rounded d-flex align-items-center justify-content-center"
+            style={{ color: "black", cursor: "pointer", height: "54px", fontSize: "18px" }}>Upload Profile</label>
+        </div>
+        <div className="d-flex col-12">
+          <p style={{ color: "red" }} className="col-8">{errors.mobile_no?.message}</p>
+          <p style={{ color: "red" }} className="col-4">{imgerr}</p>
+        </div>
+        <div className="col-md-6 d-flex align-items-center">
+          <input
+            accept=".jpg,.jpeg,.png"
+            type="file"
+            className="form-control from-ctr"
+            id="uploadimg"
+            style={{ display: "none" }}
+            onChange={uploadimages}
+          />
         </div>
         <div col-12>
           {img && <img src={img[0]} alt="profile-img" className="col-md-6 img-fluid  rounded-thumbnail mx-auto" />}

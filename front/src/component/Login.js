@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../store/actions/authAction";
 import { ThreeDots } from "react-loader-spinner";
@@ -109,9 +109,9 @@ const Login = () => {
             </label>
           </div>
           <div>
-            <a href="forgot.html" style={{ textDecoration: "none" }}>
+            <NavLink to="/forgotpassword" style={{textDecoration:"none"}}>
               Forgot password?
-            </a>
+            </NavLink>
           </div>
         </div>
 
