@@ -87,3 +87,49 @@ def data_of_user(u_id):
     cursor.close()
     conn.close()
     return data
+
+#sending otp
+#cheking if email is there or not in the database
+def is_email_there(email):
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT COUNT(*) FROM users WHERE email = '{email}'")
+    count = cursor.fetchone()[0]
+    conn.commit()
+    cursor.close()
+    conn.close()
+    if count > 0:
+        return 1
+    else: 
+        return 0
+
+#save otp
+def save_otp(email,otp):
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(f"UPDATE users SET otp = '{otp}' WHERE email = '{email}'")
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+#get otp
+def get_otp(u_id):
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * from users where u_id = '{u_id}'")
+    data = cursor.fetchone()
+    # cursor.execute(f"UPDATE users SET opt = NULL wehre otp = {otp}")
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return data
+
+#delete otp
+def del_otp(u_id, otp):
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(f"UPDATE users SET otp = NULL WHERE otp = {otp} AND u_id = '{u_id}'")
+    conn.commit()
+    cursor.close()
+    conn.close()
+

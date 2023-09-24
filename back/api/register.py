@@ -111,19 +111,6 @@ def data_update():
 
 
 
-#change user password
-@login_api.patch('/change_user_password')
-def change_password_user():
-    token = request.headers.get("Authorization")
-    u_id = tokan_to_u_id(token)
-    p = request.json.get("password")
-    password = bcrypt.hash(p)
-    change_user_password(u_id, password)
-    return jsonify({"message":"Your password has changed successfully"})
-
-
-
-
 
 
 #Geting user data
@@ -134,3 +121,59 @@ def user_data():
     d = data_of_user(u_id)
     data = {"Username":d[1],"email":d[2],"mobile_no":d[4],"photo":d[5]}
     return data
+
+
+
+
+
+#Sending the otp
+import smtplib
+import random
+@login_api.post('/send_otp')
+def otp():
+    email = request.json.get("email")
+    count = is_email_there(email)
+    if count > 0:
+        user = g_user(email)
+        u_id = (user[0])
+        
+        
+        token = generate_token(u_id)
+        otp = random.randint(1000, 9999)
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login("estate.explorer555@gmail.com", "aegu aoil mcjv hajk") 
+        message = f"your otp is {otp}"
+        s.sendmail("estate.explorer555@gmail.com", f"{email}", message)
+        s.quit()
+        
+        
+        save_otp(email,otp)
+        return jsonify({"token":f"{token}","message": f"Otp has been send to {email}"})
+    else:
+        return jsonify({"message": f"{email} is not registered email address"})
+
+#checking the otp 
+@login_api.post('/check_otp')
+def check_otpp():
+    token = request.headers.get("Authorization")
+    otp_u = request.json.get("otp")
+    u_id = tokan_to_u_id(token)
+    data = get_otp(u_id)
+    otp_d = (data[6])
+    if (otp_u == otp_d):
+        del(u_id,otp_d)
+        return jsonify({"message":"otp is matched"})
+    else:
+        return jsonify({"message":"otp doesn't matched"})
+
+
+#change user password
+@login_api.patch('/change_user_password')
+def change_password_user():
+    token = request.headers.get("Authorization")
+    u_id = tokan_to_u_id(token)
+    p = request.json.get("password")
+    password = bcrypt.hash(p)
+    change_user_password(u_id, password)
+    return jsonify({"message":"Your password has changed successfully"})
