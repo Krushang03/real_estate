@@ -1,12 +1,12 @@
 from database.connectionn import connection
 
 #Adding properties into the database
-def a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate):
+def a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo_path, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate):
     
     
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(f"""INSERT INTO property(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate) VALUES ('{p_id}', '{u_id}', '{Holder_name}', {mobile_no}, '{house_no}', '{area_name}', '{state_name}', '{city_name}', '{country_name}', array {photo}, '{bhk}', '{prop_size}', {price}, '{furniture}','{sell_or_rent}', '{dis}',{prop_deal}, '{prop_type}', {ddate})""")
+    cursor.execute(f"""INSERT INTO property(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo_path, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate) VALUES ('{p_id}', '{u_id}', '{Holder_name}', {mobile_no}, '{house_no}', '{area_name}', '{state_name}', '{city_name}', '{country_name}', '{photo_path}'  , '{bhk}', '{prop_size}', {price}, '{furniture}','{sell_or_rent}', '{dis}',{prop_deal}, '{prop_type}', {ddate})""")
     
     
     conn.commit()
@@ -20,7 +20,7 @@ def a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, 
 def s_data():
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT p_id, photo, city_name, state_name, bhk, price, prop_size FROM property")
+    cursor.execute("SELECT p_id, photo_path, city_name, state_name, bhk, price, prop_size FROM property")
     data = cursor.fetchall()
     conn.commit()
     cursor.close()
@@ -58,7 +58,6 @@ def del_re(p_id):
     with conn.cursor() as cursor:
         cursor.execute(f"""DELETE FROM property WHERE p_id = '{p_id}' """)
     conn.commit()
-
 
 #searching for perticular property address with help of  "country_name" or/and "city_name" or/and "state_name".
 # def searchh():

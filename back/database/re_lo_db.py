@@ -2,12 +2,12 @@ from database.connectionn import connection
 
 
 # Creatig user
-def c_user(u_id,username, email, password, mobile_no, photo):
+def c_user(u_id,username, email, password, mobile_no, photo, admin):
     conn = connection()
     cursor = conn.cursor()
 
-    query = "INSERT INTO users (u_id,username,email, password, mobile_no, photo) VALUES (%s, %s, %s, %s, %s, %s)"
-    cursor.execute(query, (u_id, username, email, password, mobile_no, photo))
+    query = "INSERT INTO users (u_id,username,email, password, mobile_no, photo, admin) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    cursor.execute(query, (u_id, username, email, password, mobile_no, photo, admin))
 
     conn.commit()
     cursor.close()

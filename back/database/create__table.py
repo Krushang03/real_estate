@@ -10,7 +10,8 @@ def create_tables():
                         password VARCHAR(100) NOT NULL,  
                         mobile_no numeric NOT NULL,
                         photo text[] NOT NULL,
-                        otp int
+                        otp int,
+                        admin boolean not null
                         )   
     """)
     #property table
@@ -24,7 +25,7 @@ def create_tables():
                         state_name char(20) not null, 
                         city_name char(20) not null,
                         country_name text not null,
-                        photo text[] not null,
+                        photo_path text not null,
                         bhk  numeric not null,
                         prop_size numeric not null,
                         price numeric not null,
