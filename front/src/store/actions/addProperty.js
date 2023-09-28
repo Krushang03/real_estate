@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const backendURL = "http://127.0.0.1:5000";
 
@@ -12,7 +12,7 @@ export const add_prop = createAsyncThunk(
     try {
       const result = await axios.post(`${backendURL}/add_prop`, data, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
           Authorization: token,
         },
       });
@@ -26,8 +26,8 @@ export const add_prop = createAsyncThunk(
         progress: undefined,
         theme: "colored",
       });
-    
-      
+
+
       return result.data;
     } catch (error) {
       console.log(error, "error from addprop");

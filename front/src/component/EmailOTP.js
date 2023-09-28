@@ -7,6 +7,7 @@ import { EmailOTPAction } from "../store/actions/password"
 import { EmailOTPVerificationAction } from "../store/actions/password"
 import { ThreeDots } from "react-loader-spinner";
 import Passwordset from "./PasswordSet"
+import "../Style/UserAuth.css"
 
 const schema = yup.object({
     email: yup
@@ -16,7 +17,7 @@ const schema = yup.object({
         .required("Please Enter your Email"),
 });
 
-const EmailOTP = () => {
+const EmailOTP = ({setforgotpasson}) => {
     const { token, message, loading } = useSelector((state) => state.password)
     const [otp, setotp] = useState(null)
     const [emailtoken, setemailtoken] = useState("")
@@ -91,7 +92,7 @@ const EmailOTP = () => {
                         </label>
                         <p style={{ color: "red" }}>{errors.email?.message}</p>
                     </div>
-                    <button className='btn btn-primary'>Send OTP</button>
+                    <button className='btn btn-login form-control'>Send OTP</button>
                 </form>)}
             {(msg?.message === m) ? "" : (token &&
                 <>
@@ -110,11 +111,11 @@ const EmailOTP = () => {
                             </label>
                             <p style={{ color: "red" }}>{otperr}</p>
                         </div>
-                        <button className='btn btn-primary' onClick={verifyotp}>Verify OTP</button>
+                        <button className='btn btn-login form-control' onClick={verifyotp}>Verify OTP</button>
                     </div>
                 </>)
             }
-            {(msg?.message === m) && <Passwordset />}
+            {(msg?.message === m) && <Passwordset setforgotpasson={setforgotpasson} />}
         </div>
     )
 }

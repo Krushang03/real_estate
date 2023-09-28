@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../store/actions/authAction";
 import { ThreeDots } from "react-loader-spinner";
 
-const Login = () => {
+const Login = ({setforgotpasson}) => {
   const { loading, error, success } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ const Login = () => {
             </label>
           </div>
           <div>
-            <NavLink to="/forgotpassword" style={{textDecoration:"none"}}>
+            <NavLink to="/userauth" onClick={()=> setforgotpasson(true)} style={{textDecoration:"none"}}>
               Forgot password?
             </NavLink>
           </div>

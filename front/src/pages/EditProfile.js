@@ -98,9 +98,9 @@ const EditProfile = () => {
                     />
                     {
                         img ?
-                            <img src={img} alt="profile image" className="img-fluid img-thumbnail mt-4 mb-2 img-size" />
+                            <img src={img} alt="profile image" style={{ boxShadow: " rgba(17, 17, 26, 0.2) 0px 1px 0px, rgba(17, 17, 26, 0.2) 0px 8px 24px, rgba(17, 17, 26, 0.2) 0px 16px 48px" }} className="img-fluid  mt-4 mb-2 img-size" />
                             :
-                            <img src={profileitem?.photo} alt="profile image" className="img-fluid img-thumbnail mt-4 mb-2 img-size" />
+                            <img src={profileitem?.photo} style={{ boxShadow: " rgba(17, 17, 26, 0.2) 0px 1px 0px, rgba(17, 17, 26, 0.2) 0px 8px 24px, rgba(17, 17, 26, 0.2) 0px 16px 48px" }} alt="profile image" className="img-fluid  mt-4 mb-2 img-size" />
                     }
                 </div>
 

@@ -25,17 +25,17 @@ const YourProfile = () => {
 
   return (
     <div>
-      <section className="h-100 gradient-custom-2">
-        <div className="container py-5 h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
+      <div className="container">
+        <section className='row'>
+          <div className='col-12 d-flex justify-content-center align-items-center' style={{ height: "91vh" }} >
             <div className="col col-lg-9 col-xl-8">
-              <div className="card">
-                <div className="rounded-top text-white d-flex flex-row black-layer">
-                  <div className="ms-3 ms-md-5 mt-5 d-flex flex-column page-1">
-                    <img src={profileitem?.photo} alt="profile image" className="img-fluid img-thumbnail mt-4 mb-2 img-size" />
+              <div className="" style={{boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px"}}>
+                <div className=" text-white d-flex flex-row black-layer">
+                  <div className="ms-3 ms-md-5 mt-5 d-flex flex-column page-1" style={{ width: "180px", height: "180px" }}>
+                    <img src={profileitem?.photo} alt="profile image" id='img-profile' className="img-thumbnail img-fluid mt-4 mb-2 img-size" />
                   </div>
                   <div className="ms-3 text-locate">
-                    <h5>username:</h5>
+                    <h5>Username:</h5>
                     <h5>{profileitem?.Username}</h5>
                   </div>
                 </div>
@@ -45,7 +45,7 @@ const YourProfile = () => {
                   </button>
 
                   <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-dialog-centered">
                       <div className="modal-content">
                         <div className="modal-header">
                           <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Profile</h1>
@@ -63,7 +63,7 @@ const YourProfile = () => {
                   </button>
 
                   <div className="modal fade" id="exampleModal2" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-dialog-centered">
                       <div className="modal-content">
                         <div className="modal-header">
                           <h1 className="modal-title fs-5" id="exampleModalLabel">Reset Password</h1>
@@ -78,14 +78,14 @@ const YourProfile = () => {
                 </div>
                 <div className="card-body px-3 px-md-5 text-black">
                   <div>
-                    <p className="lead fw-normal mb-1">About</p>
+                    <p className="lead fw-normal mb-2 mt-3"><strong>Contact Details</strong></p>
                     <div className="p-3">
-                      <p className="font-italic mb-1">Phone No : {profileitem?.mobile_no}</p>
-                      <p className="font-italic mb-0">Email Id : {profileitem?.email}</p>
+                      <p className="font-italic mb-1"><strong>Phone No :</strong> {profileitem?.mobile_no}</p>
+                      <p className="font-italic mb-0"><strong>Email Id : </strong>{profileitem?.email}</p>
                     </div>
                   </div>
-                  <div className="d-flex justify-content-between align-items-center mb-4">
-                    <p className="lead fw-normal mb-0">Recent photos</p>
+                  {/* <div className="d-flex justify-content-between align-items-center mb-4">
+                    <p className="lead fw-normal mb-0">My Properties</p>
                     <p className="mb-0"><a href="#!" className="text-muted">Show all</a></p>
                   </div>
                   <div className="row g-2">
@@ -107,13 +107,13 @@ const YourProfile = () => {
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
                         alt="image 1" className="w-100 rounded-3" />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   )
 }

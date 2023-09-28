@@ -154,8 +154,8 @@ const Register = () => {
           </label>
           <p style={{ color: "red" }}>{errors.email?.message}</p>
         </div>
-        <div className="d-flex align-items-center col-12">
-          <div className="col-8 form-floating d-flex align-items-center">
+        <div className="d-flex align-items-center col-12 justify-content-between">
+          <div className="col-6 form-floating d-flex align-items-center">
             <input
               type="int"
               maxLength={10}
@@ -170,12 +170,12 @@ const Register = () => {
             </label>
           </div>
 
-          <label htmlFor="uploadimg" className="btn btn-outline-dark col-4 rounded d-flex align-items-center justify-content-center"
-            style={{ color: "black", cursor: "pointer", height: "54px", fontSize: "18px" }}>Upload Profile</label>
+          <label htmlFor="uploadimg" className="btn btn-outline-secondary col-5 rounded d-flex align-items-center justify-content-center "
+            style={{ color: "black", cursor: "pointer", height: "54px", fontSize: "18px" }}>Profile image</label>
         </div>
         <div className="d-flex col-12">
-          <p style={{ color: "red" }} className="col-8">{errors.mobile_no?.message}</p>
-          <p style={{ color: "red" }} className="col-4">{imgerr}</p>
+          <p style={{ color: "red" }} className="col-7">{errors.mobile_no?.message}</p>
+          <p style={{ color: "red" }} className="col-5">{imgerr}</p>
         </div>
         <div className="col-md-6 d-flex align-items-center">
           <input

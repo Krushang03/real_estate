@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,8 +13,8 @@ const schema = yup.object({
 
 
 
-const Passwordset = () => {
-    const { token } = useSelector((state) => state.password)
+const Passwordset = ({ setforgotpasson }) => {
+    const { token, isssuccess } = useSelector((state) => state.password)
 
     const {
         register,
@@ -33,6 +33,11 @@ const Passwordset = () => {
         dispatch(ForgotPasswordAction(passtoken))
         // navigate("/userauth")
     }
+    useEffect(() => {
+        if (isssuccess) {
+            setforgotpasson(false)
+        }
+    }, [isssuccess])
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +69,7 @@ const Passwordset = () => {
                     </label>
                     <p style={{ color: "red" }}>{errors.confirm_password?.message}</p>
                 </div>
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                <button type='submit' className='btn form-control btn-login'>Submit</button>
             </form>
         </div>
     )
