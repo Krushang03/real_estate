@@ -29,6 +29,7 @@ function App() {
           <Route path="/" element={<Home setShow={setShow} />} />
           <Route path="/userauth" element={<UserAuth />} />
           <Route path="/property/:id" element={<SingleProperty />} />
+          <Route path="/myproperty/:id" element={<SingleProperty />} />
           <Route path="/myproperty" element={<MyProperty />} />
           <Route path="/yourprofile" element={<YourProfile />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />

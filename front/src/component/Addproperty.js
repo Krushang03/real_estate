@@ -51,6 +51,9 @@ const Addproperty = () => {
   var empty = [];
   const [images, setimages] = useState([]);
   const [photos, setphotos] = useState([]);
+  const [lightbillprv, setlightbillprv] = useState("");
+  const [lightbill, setlightbill] = useState();
+  const [lightbillprverr, setlightbillprverr] = useState();
   const [imgerr, setimgerr] = useState();
   const [imglenerr, setimglenerr] = useState();
 
@@ -66,29 +69,18 @@ const Addproperty = () => {
   }, []);
 
   const onReset = () => {
-    //   setdata(empty)
     setimages(empty);
     setphotos(empty);
-    //   seterrorHolder_name("")
-    //   seterrormobile_no("")
-    //   seterrorhouse_no("")
-    //   seterrorarea_name("")
-    //   seterrorcountry_name("")
-    //   seterrorcity_name("")
-    //   seterrorstate_name("")
-    //   seterrorbhk("")
-    //   seterrorprop_size("")
-    //   seterrorprice("")
+    setlightbill(empty);
+    setlightbillprv(empty);
+    setlightbillprv("")
     setimgerr("")
     setimglenerr("")
-    //   seterrorfurniture("")
-    //   seterrorprop_type("")
-    //   seterrordis("")
-    //   seterrorsell_or_rent("")
   };
 
   useEffect(() => {
     setimages(empty);
+    setlightbillprv(empty);
   }, [refresh]);
 
   useEffect(() => {
@@ -97,7 +89,11 @@ const Addproperty = () => {
       setimgerr(rmv);
       setimglenerr(rmv);
     }
-  }, [images]);
+    if (lightbillprv.length > 0) {
+      const rmv = "";
+      setlightbillprverr(rmv);
+    }
+  }, [images, lightbillprv]);
 
   const uploadimages = (e) => {
     const files = e.target.files;
@@ -122,40 +118,102 @@ const Addproperty = () => {
       setimages(results);
     });
 
-    for (let i = 0; i < files.length; i++) {
-      const file = Array.from(files)
-      setphotos(file)
+    // const imgurl = Array.from(files)?.map((file) => {
+    //     return URL.createObjectURL(file)
+    //   })
+    // // setphotos(files)
+    // setimages(imgurl)
+
+    // for (let i = 0; i < files.length; i++) {
+    //   const file = Array.from(files)
+    //   setphotos(file)
+    // }
+  }
+
+  const uploadimagelightbill = (e) => {
+    const files2 = e.target.files;
+    // // const imgurl2 = Array.from(files2)?.map((file) => {
+    // //    URL.createObjectURL(file)
+    // // })
+    // // setlightbillprv(imgurl2)
+    // const lightbill = window.URL.createObjectURL(files2)
+    // setlightbillprv([lightbill])
+
+    const imagePromises2 = [];
+
+    for (let i = 0; i < files2.length; i++) {
+      const file = files2[i];
+      if (file) {
+        const reader = new FileReader();
+        imagePromises2.push(
+          new Promise((resolve) => {
+            reader.onload = (e) => {
+              resolve(e.target.result);
+            };
+            reader.readAsDataURL(file);
+          })
+        );
+      }
     }
 
 
+    Promise.all(imagePromises2).then((results) => {
+      setlightbillprv(results);
+    });
+
+    // const file2 = Array.from(files2)
+    // setlightbill(file2)
   }
+  console.log(lightbillprv, "lightbill")
 
   const onSubmit = (data) => {
-    fd.append("Holder_name", data.Holder_name);
-    fd.append("mobile_no", data.mobile_no);
-    fd.append("house_no", data.house_no);
-    fd.append("area_name", data.area_name);
-    fd.append("city_name", data.city_name);
-    fd.append("prop_type", data.prop_type);
-    fd.append("state_name", data.state_name);
-    fd.append("country_name", data.country_name);
-    fd.append("sell_or_rent", data.sell_or_rent);
-    fd.append("bhk", data.bhk);
-    fd.append("prop_size", data.prop_size);
-    fd.append("price", data.price);
-    fd.append("furniture", data.furniture);
-    fd.append("dis", data.dis);
-    // fd.append("statuss", "pending");
-    // fd.append("prop_type", "true");
-    Array.from(photos).map((file) => {
-      fd.append("photo", file)
-    })
+    // fd.append("Holder_name", data.Holder_name);
+    // fd.append("mobile_no", data.mobile_no);
+    // fd.append("house_no", data.house_no);
+    // fd.append("area_name", data.area_name);
+    // fd.append("city_name", data.city_name);
+    // fd.append("prop_type", data.prop_type);
+    // fd.append("state_name", data.state_name);
+    // fd.append("country_name", data.country_name);
+    // fd.append("sell_or_rent", data.sell_or_rent);
+    // fd.append("bhk", data.bhk);
+    // fd.append("prop_size", data.prop_size);
+    // fd.append("price", data.price);
+    // fd.append("furniture", data.furniture);
+    // fd.append("dis", data.dis);
+    // Array.from(photos).map((file) => {
+    //   fd.append("photo", file)
+    // })
+    // Array.from(lightbill).map((file) => {
+    //   fd.append("lightbill", file)
+    // })
 
-    console.log(fd, "fd");
-    if (photos.length > 0) {
+    // console.log(fd, "fd");
+    const item = {
+      Holder_name: data.Holder_name,
+      mobile_no: data.mobile_no,
+      house_no: data.house_no,
+      area_name: data.area_name,
+      city_name: data.city_name,
+      prop_type: data.prop_type,
+      state_name: data.state_name,
+      country_name: data.country_name,
+      sell_or_rent: data.sell_or_rent,
+      bhk: data.bhk,
+      prop_size: data.prop_size,
+      price: data.price,
+      furniture: data.furniture,
+      dis: data.dis,
+      photo: images,
+      litebill: lightbillprv
+    }
+    console.log(item);
+    if (images.length > 0 && lightbillprv.length > 0) {
       onReset();
+      reset();
       setimages(empty);
-      dispatch(add_prop(fd));
+      dispatch(add_prop(item));
+      navigate("/myproperty")
     }
 
   };
@@ -164,6 +222,10 @@ const Addproperty = () => {
     if (images.length === 0) {
       const err2 = "You need to provide an image";
       setimgerr(err2);
+    }
+    if (!lightbillprv) {
+      const err3 = "You need to provide lightbill";
+      setlightbillprverr(err3);
     }
   };
 
@@ -488,59 +550,120 @@ const Addproperty = () => {
                 </div>
 
                 <div className="col-md-10">
-                  <p>Images</p>
-                  <div className="d-flex align-items-center">
-                    <label htmlFor="uploadimg" className="d-flex-align-items-center justify-content-center btn btn-outline-secondary col-12">Upload Properties images</label>
-                    <input
-                      accept=".jpg,.jpeg,.png"
-                      multiple
-                      type="file"
-                      className="form-control"
-                      id="uploadimg"
-                      name="photoo"
-                      onChange={(e) => [uploadimages(e)]}
-                      style={{ display: "none" }}
-                    />
-                  </div>
+                  <p>Property Images</p>
+                  <div className="row d-flex align-items-center">
+                    <div className="">
+                      <div className="">
+                        <label htmlFor="uploadimg" className="d-flex-align-items-center justify-content-center btn btn-outline-secondary col-12">Upload Property images</label>
+                      </div>
 
-                  {(imglenerr || imgerr) && (
-                    <p style={{ color: "red" }}>
-                      {imgerr || imglenerr}
-                    </p>
-                  )}
+                      <input
+                        accept=".jpg"
+                        multiple
+                        type="file"
+                        className="form-control"
+                        id="uploadimg"
+                        name="photoo"
+                        onChange={(e) => [uploadimages(e)]}
+                        style={{ display: "none" }}
+                      />
+                      {(imglenerr || imgerr) && (
+                        <p style={{ color: "red" }}>
+                          {imgerr || imglenerr}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
+                {images.length > 0 &&
+                  <div className="col-md-10">
+                    <div className="row col-12 p-4 rounded" style={{ backgroundColor: "whitesmoke", marginLeft: "1px" }}>
+                      {images &&
+                        images?.map((item, index) => {
+                          return (
+                            <>
+                              <div
+                                className="col-md-4 position-relative mb-4"
+                                key={index}
+                              >
+                                <img
+                                  // src={item.image}
+                                  src={item}
+                                  alt="img-preview"
+                                  className="img-fluid"
+                                  style={{ width: "250px", height: "200px" }}
+                                />
+
+                                <FaTrash
+                                  className="text-danger btn-trash"
+                                  style={{ cursor: "pointer", right: "35px" }}
+                                  // onClick={() => deleteimg(item.id)}
+                                  onClick={() => deleteimgs(item, index)}
+                                />
+                              </div>
+                            </>
+                          );
+                        })
+
+                      }
+                    </div>
+                  </div>}
+
                 <div className="col-md-10">
-                  <div className="row">
-                    {images &&
-                      images?.map((item, index) => {
-                        return (
-                          <>
-                            <div
-                              className="col-md-4 position-relative mb-4"
-                              key={index}
-                            >
-                              <img
-                                // src={item.image}
-                                src={item}
-                                alt="img-preview"
-                                className="img-fluid"
-                                style={{width:"250px",height:"200px"}}
-                              />
-  
-                              <FaTrash
-                                className="text-danger btn-trash"
-                                style={{ cursor: "pointer" }}
-                                // onClick={() => deleteimg(item.id)}
-                                onClick={() => deleteimgs(item, index)}
-                              />
-                            </div>
-                          </>
-                        );
-                      })
+                  <p>Lightbill</p>
+                  <div className="row d-flex align-items-center">
+                    <div className="">
+                      <div className="">
+                        <label htmlFor="uploadimg2" className="d-flex-align-items-center justify-content-center btn btn-outline-secondary col-12">Upload Property Lightbill</label>
+                      </div>
 
-                    }
+                      <input
+                        accept=".jpg"
+                        type="file"
+                        className="form-control"
+                        id="uploadimg2"
+                        name="lightbill"
+                        onChange={(e) => [uploadimagelightbill(e)]}
+                        style={{ display: "none" }}
+                      />
+                      {(lightbillprverr) && (
+                        <p style={{ color: "red" }}>
+                          {lightbillprverr}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
+
+                {lightbillprv?.length > 0 &&
+                  <div className="col-md-10">
+                    <div className="row col-12 p-4 rounded" style={{ backgroundColor: "whitesmoke", marginLeft: "1px" }}>
+                      {/* {lightbillprv &&
+                        lightbillprv?.map((item, index) => {
+                          return (
+                            <>
+                              <div
+                                className="col-md-6 position-relative mx-auto"
+                                key={index}
+                              >
+                                <img
+                                  // src={item.image}
+                                  src={item}
+                                  alt="img-preview"
+                                  className="img-fluid"
+                                  style={{ width: "100%", height: "280px" }}
+                                />
+                              </div>
+                            </>
+                          );
+                        }
+                        )
+                      } */}
+                      {
+                        lightbillprv && <img src={lightbillprv} />
+                      }
+                    </div>
+                  </div>}
 
                 <div className="col-md-10">
                   <div className="form-floating">

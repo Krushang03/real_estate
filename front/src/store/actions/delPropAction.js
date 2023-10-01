@@ -4,19 +4,18 @@ import { toast } from 'react-toastify';
 
 const backendURL = "http://127.0.0.1:5000";
 
-export const add_prop = createAsyncThunk(
-  "addprop/add",
-  async (data, { rejectWithValue }) => {
-    const userDetail = JSON.parse(localStorage.getItem("userInfo"));
-    const token = userDetail.token;
+export const del_prop_action = createAsyncThunk(
+  "deleteproperty",
+  async (ids, { rejectWithValue }) => {
     try {
-      const result = await axios.post(`${backendURL}/add_prop`, data, {
+      const result = await axios.delete(`${backendURL}/del_re/${ids.id}`, ids, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token,
+          "Authorization": ids.uid,
+           
         },
       });
-      toast.success('Successfully property added', {
+      toast.success('Successfully property deleted', {
         position: "top-right",
         autoClose: 2500,
         hideProgressBar: false,
@@ -30,7 +29,7 @@ export const add_prop = createAsyncThunk(
 
       return result.data;
     } catch (error) {
-      console.log(error, "error from addprop");
+      console.log(error, "error from delete property");
     }
   }
 );

@@ -1,28 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { add_prop } from "../actions/addProperty";
+import { del_prop_action } from "../actions/delPropAction";
 
 const addPropSlice = createSlice({
-    name: "addprop",
+    name: "delprop",
     initialState: {
       loading: false,
-      refresh: false,
       error: null,
-      U_id: null,
+      
+      msg: null,
+      searchData: [],
     },
     reducers: {},
     extraReducers: {
-      [add_prop.pending]: (state, action) => {
+      [del_prop_action.pending]: (state, action) => {
         state.loading = true;
         state.error = null;
       },
-      [add_prop.fulfilled]: (state, { payload }) => {
+      [del_prop_action.fulfilled]: (state, { payload }) => {
         state.loading = false;
-        state.refresh = true;
+       
+        state.msg = payload;
         state.error = null;
-        state.U_id = payload.U_id;
       },
-      [add_prop.rejected]: (state, { payload }) => {
+      [del_prop_action.rejected]: (state, { payload }) => {
         state.loading = false;
+        
         state.error = payload;
       },
     },

@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { get_prop } from "../store/actions/getPropAction.js";
 import { useNavigate } from "react-router-dom";
 import "../Style/allproperty.css";
+import { del_prop_action } from "../store/actions/delPropAction.js";
 const Features = () => {
   const { getusers } = useSelector((state) => state.getprop);
+  const { success } = useSelector((state) => state.delprop);
   const [item, setitem] = useState([])
   // const [limit, setlimit] = useState(3)
   const dispatch = useDispatch()
@@ -19,7 +21,7 @@ const Features = () => {
     if (getusers) {
       setitem(getusers)
     }
-  }, [getusers])
+  }, [getusers, success])
 
   useEffect(() => {
     if (!localStorage.getItem("userInfo")) {
@@ -27,9 +29,6 @@ const Features = () => {
     }
   }, []);
 
-  const viewProduct = () => {
-
-  }
   return (
     <>
       {/* <NavLink className="nav-link nav-text" to="/addproperty">

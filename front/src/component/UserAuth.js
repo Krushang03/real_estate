@@ -5,7 +5,6 @@ import Login from './Login'
 import Register from './Register'
 import { useNavigate } from "react-router-dom";
 import EmailOTP from './EmailOTP'
-import ForgotPassword from './ForgotPassword'
 
 // import { useSelector } from "react-redux";
 

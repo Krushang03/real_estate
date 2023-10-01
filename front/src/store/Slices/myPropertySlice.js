@@ -1,29 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { my_prop } from "../actions/myProperty";
+import { my_prop_pending_Action } from "../actions/myProperty";
 
 const myPropSlice = createSlice({
     name: "myprop",
     initialState: {
-        usersprop: [],
+        usersproppendding: [],
         u_id: "",
         loading: false,
         error: null,
     },
     reducers: {},
     extraReducers: {
-        [my_prop.pending]: (state, action) => {
+        [my_prop_pending_Action.pending]: (state, action) => {
             state.loading = true;
-            state.usersprop = null;
+            state.usersproppendding = null;
             state.error = null;
         },
-        [my_prop.fulfilled]: (state, { payload }) => {
+        [my_prop_pending_Action.fulfilled]: (state, { payload }) => {
             state.loading = false;
-            state.usersprop = payload;
+            state.usersproppendding = payload;
             state.error = null;
         },
-        [my_prop.rejected]: (state, { payload }) => {
+        [my_prop_pending_Action.rejected]: (state, { payload }) => {
             state.loading = false;
-            state.usersprop = null;
+            state.usersproppendding = null;
             state.error = payload;
         },
     },
