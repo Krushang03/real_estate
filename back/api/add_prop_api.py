@@ -1,13 +1,15 @@
 from flask import Blueprint, jsonify, request
 from database.create__table import create_tables
-from database.add_pro_db import a_prop, s_data, a_data, del_re, my_prop
+from database.add_pro_db import *
 import uuid
 from datetime import date
 from api.register import tokan_to_u_id
+from api.photo import save_photo
 import os
-import jwt
+
 prop = Blueprint('prop', __name__)
 create_tables()
+
 
 
 
@@ -18,52 +20,47 @@ create_tables()
 @prop.post('/add_prop')
 def add_prop():
     token = request.headers.get("Authorization")
-    Holder_name = request.form.get("Holder_name")
-    mobile_no = request.form.get("mobile_no")
-    photo = request.files.get("photo")
-    prop_size = request.form.get("prop_size")
-    price = request.form.get("price")
-    house_no = request.form.get("house_no")
-    area_name = request.form.get("area_name")
-    state_name = request.form.get("state_name")
-    city_name = request.form.get("city_name")
-    country_name = request.form.get("country_name")
-    furniture = request.form.get("furniture")
-    bhk = request.form.get("bhk")
-    dis = request.form.get("dis")
-    sell_or_rent = request.form.get("sell_or_rent")
-    prop_deal = request.form.get("prop_deal")
-    prop_type = request.form.get("prop_type")
-    d = date.today()
-    ddate = d
-    
+    Holder_name = request.json.get("Holder_name")
+    mobile_no = request.json.get("mobile_no")
+    photo = request.json.get("photo")
+    prop_size = request.json.get("prop_size")
+    price = request.json.get("price")
+    house_no = request.json.get("house_no")
+    area_name = request.json.get("area_name")
+    state_name = request.json.get("state_name")
+    city_name = request.json.get("city_name")
+    country_name = request.json.get("country_name")
+    furniture = request.json.get("furniture")
+    bhk = request.json.get("bhk")
+    dis = request.json.get("dis")
+    sell_or_rent = request.json.get("sell_or_rent")
+    litebill = request.json.get("litebill")
+    prop_deal = "true"
+    prop_type = request.json.get("prop_type")
+    statuss = "pendding"
+    ddate = date.today()
     p_id = uuid.uuid4()
     
+    # path = "back/database/photo"
+    # if not os.path.exists(path):
+    #     os.makedirs(path)
+        
+    # print(photo)
+    # for i in photo:
+    #     photo_name = str(uuid.uuid4()) + ".jpg"
+    #     i.save(os.path.join(path,photo_name))
+    #     photo_path = []
+    #     photo_path.append(photo_name)
     
-
-    photo_name = str(uuid.uuid4()) + ".jpg"
-
-    path = "back/database/photo"
     
-    if not os.path.exists(path):
-        os.makedirs(path)
-    
-    photo_path = f"back/database/photo/{photo_name}"
-
-    photo.save(os.path.join(path, photo_name))
-    
-
-
-
-
 
     # try:
     u_id = tokan_to_u_id(token)
     # try:
-    if (len(country_name) == 0 and len(Holder_name) == 0 and len(house_no) == 0 and len(area_name) == 0 and len(state_name) == 0 and len(city_name) == 0 and len(photo_path) == 0 and len(bhk) == 0 and len(prop_size) == 0 and len(price) == 0 and len(furniture) == 0 and len(dis) == 0 and len(str(mobile_no)) == 0 and len(str(prop_size)) == 0 and len(str(price)) == 0 and len(str(bhk)) == 0):
+    if (len(country_name) == 0 and len(Holder_name) == 0 and len(house_no) == 0 and len(area_name) == 0 and len(state_name) == 0 and len(city_name) == 0 and len(photo) == 0 and len(bhk) == 0 and len(prop_size) == 0 and len(price) == 0 and len(furniture) == 0 and len(dis) == 0 and len(str(mobile_no)) == 0 and len(str(prop_size)) == 0 and len(str(price)) == 0 and len(str(bhk)) == 0):
                 return jsonify({'message':'Some fields are empty'}),
             # else:
-    a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name,country_name, photo_path, bhk, prop_size, price, furniture, sell_or_rent,  dis, prop_deal, prop_type, ddate)
+    a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name,country_name, photo, bhk, prop_size, price, furniture, sell_or_rent,  dis, prop_deal, prop_type, ddate, statuss,litebill)
     return jsonify({'U_id': u_id, 'Holder name': Holder_name, 'message': 'Property added'}), 200
         
                 
@@ -78,11 +75,11 @@ def add_prop():
 
 
 
-# fetchin all data from database
+# fetchin all data from database    
 @prop.get('/adata/<p_id>')
 def aa_data(p_id):
     data = a_data(p_id)
-    details = {"p_id": data[0], "u_id": data[1], "Holder_name": data[2], "mobile_no": data[3], "house_no": data[4], "area_name": data[5], "state_name": data[6], "city_name": data[7],"country_name": data[8], "photo_path": data[9], "bhk": data[10], "prop_size": data[11], "price": data[12], "furniture": data[13], "sell_or_rent": data[14], "dis": data[15], "prop_deal": data[16], "prop_type": data[17]}
+    details = {"p_id": data[0], "u_id": data[1], "Holder_name": data[2], "mobile_no": data[3], "house_no": data[4], "area_name": data[5], "state_name": data[6], "city_name": data[7],"country_name": data[8], "photo": data[9], "bhk": data[10], "prop_size": data[11], "price": data[12], "furniture": data[13], "sell_or_rent": data[14], "dis": data[15], "prop_deal": data[16], "prop_type": data[17]}
     return details
 
 
@@ -90,7 +87,7 @@ def aa_data(p_id):
 # fetching some data from database
 @prop.get('/sdata')
 def ss_data():
-    c = ["p_id", "photo_path", "city_name", "state_name", "bhk", "price", "prop_size"]
+    c = ["p_id", "photo", "city_name", "state_name", "bhk", "price", "prop_size"]
     data = s_data()
     new_data = []
     for r in data:
@@ -103,27 +100,61 @@ def ss_data():
 
 
 # Deleting data from table
-@prop.delete('/del_re')
-def deleting():
-    p_id = request.headers.get("Authorization")
+@prop.delete('/del_re/<p_id>')
+def deleting(p_id):
     del_re(p_id)
     return jsonify({"message":"Record deleted"})
 
 
-#fetching my(individual user's) data from databse
-@prop.get('/my_data/<u_id>')
+#fetching my(individual user's pendding prop) data from databse
+@prop.get('/pendding_my_data/<u_id>')
 def my_data(u_id):
-    data = my_prop(u_id)
-    c = ["p_id", "u_id", "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name","country_name", "photo_path", "bhk", "prop_size", "price", "furniture", "sell_or_rent",  "dis", "prop_deal", "prop_type"] 
-    
+    data = pendding_my_prop(u_id)
+    c = ["p_id", "u_id", "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name","country_name", "photo", "bhk", "prop_size", "price", "furniture", "sell_or_rent",  "dis", "prop_deal", "prop_type", "ddate", "status"] 
+        
     new_data = []
     for r in data:
         d = {}
-        for i in range(18):
+        for i in range(20):
             d[c[i]] = r[i]
         new_data.append(d)
     
     return jsonify(new_data)
+
+
+#fetching my(individual user's verified prop) data from databse
+@prop.get('/verified_my_data/<u_id>')
+def verified_my_data(u_id):
+    data = verified_my_prop(u_id)
+    c = ["p_id", "u_id", "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name","country_name", "photo", "bhk", "prop_size", "price", "furniture", "sell_or_rent",  "dis", "prop_deal", "prop_type", "ddate", "status"] 
+        
+    new_data = []
+    for r in data:
+        d = {}
+        for i in range(20):
+            d[c[i]] = r[i]
+        new_data.append(d)
+    
+    return jsonify(new_data)
+
+
+
+
+#fetching my(individual user's rejected prop) data from databse
+@prop.get('/rejected_my_data/<u_id>')
+def rejected_my_data(u_id):
+    data = rejected_my_prop(u_id)
+    c = ["p_id", "u_id", "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name","country_name", "photo", "bhk", "prop_size", "price", "furniture", "sell_or_rent",  "dis", "prop_deal", "prop_type", "ddate", "status"] 
+        
+    new_data = []
+    for r in data:
+        d = {}
+        for i in range(20):
+            d[c[i]] = r[i]
+        new_data.append(d)
+    
+    return jsonify(new_data)
+
 
 
 

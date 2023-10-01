@@ -18,23 +18,25 @@ def create_tables():
     cursor.execute("""CREATE TABLE IF NOT EXISTS property(
                         p_id varchar(1000) not null,
                         u_id varchar(1000) not null,
-                        Holder_name varchar(100) not null,
+                        Holder_name varchar(200) not null,
                         mobile_no numeric not null, 
-                        house_no varchar(10) not null,
-                        area_name varchar(20) not null, 
-                        state_name char(20) not null, 
-                        city_name char(20) not null,
+                        house_no varchar(200) not null,
+                        area_name varchar(200) not null, 
+                        state_name char(200) not null, 
+                        city_name char(200) not null,
                         country_name text not null,
-                        photo_path text not null,
+                        photo text[] not null,
                         bhk  numeric not null,
                         prop_size numeric not null,
                         price numeric not null,
-                        furniture char(30) not null,
-                        sell_or_rent char(10) not null,
+                        furniture char(300) not null,
+                        sell_or_rent char(100) not null,
                         dis varchar(1000) not null,
                         prop_deal boolean not null,
-                        prop_type char(50) not null,
-                        ddate varchar(20))
+                        prop_type char(500) not null,
+                        ddate varchar(200),
+                        statuss varchar(200) not null,
+                        litebill text[] not null)
                         """)
     conn.commit()
     cursor.close()

@@ -18,14 +18,14 @@ def tokan_to_u_id(token):
 
 @login_api.post('/register')
 def register():
-    try :
+    # try :
         username = request.json.get('username')
         email = request.json.get('email')
         password = request.json.get('password')
         mobile_no = request.json.get('mobile_no')
         photo= request.json.get('photo')
         hash_password = bcrypt.hash(password)
-        admin = request.json.get("admin")
+        admin = "false"
         
         u_id = str(uuid.uuid4())
         
@@ -43,8 +43,8 @@ def register():
                 c_user(u_id,username, email, hash_password, mobile_no, photo, admin)
                 token = generate_token(u_id)
                 return jsonify({'message': 'User created successfully','token': token,'username' : username}), 201
-    except:
-        return jsonify({'message':'email is already used'}), 401
+    # except:
+    #     return jsonify({'message':'email is already used'}), 401
 
 @login_api.post('/login')
 def login():
@@ -57,7 +57,7 @@ def login():
             if(email==user[2]):
                 if bcrypt.verify(hash_password,user[3]):
                     token = generate_token(u_id)
-                    return jsonify({'token': token,'username':user[1]}), 200
+                    return jsonify({'token': token,'username':user[1],  "admine" : user[7]  },), 200
                 else:
                     return jsonify({'message': 'Password does not match'}), 401
             
