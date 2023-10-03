@@ -57,7 +57,7 @@ def login():
             if(email==user[2]):
                 if bcrypt.verify(hash_password,user[3]):
                     token = generate_token(u_id)
-                    return jsonify({'token': token,'username':user[1],  "admine" : user[7]  },), 200
+                    return jsonify({'token': token,'username':user[1],  "admine" : user[7], "photo" : user[5]  , "u_id":u_id},), 200
                 else:
                     return jsonify({'message': 'Password does not match'}), 401
             

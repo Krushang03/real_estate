@@ -4,8 +4,6 @@ from database.add_pro_db import *
 import uuid
 from datetime import date
 from api.register import tokan_to_u_id
-from api.photo import save_photo
-import os
 
 prop = Blueprint('prop', __name__)
 create_tables()
@@ -37,20 +35,12 @@ def add_prop():
     litebill = request.json.get("litebill")
     prop_deal = "true"
     prop_type = request.json.get("prop_type")
-    statuss = "pendding"
+    statuss = "pending"
     ddate = date.today()
     p_id = uuid.uuid4()
+    print(ddate)
     
-    # path = "back/database/photo"
-    # if not os.path.exists(path):
-    #     os.makedirs(path)
-        
-    # print(photo)
-    # for i in photo:
-    #     photo_name = str(uuid.uuid4()) + ".jpg"
-    #     i.save(os.path.join(path,photo_name))
-    #     photo_path = []
-    #     photo_path.append(photo_name)
+    
     
     
 
@@ -76,7 +66,7 @@ def add_prop():
 
 
 # fetchin all data from database    
-@prop.get('/adata/<p_id>')
+@prop.get('/fetch_all_data/<p_id>')
 def aa_data(p_id):
     data = a_data(p_id)
     details = {"p_id": data[0], "u_id": data[1], "Holder_name": data[2], "mobile_no": data[3], "house_no": data[4], "area_name": data[5], "state_name": data[6], "city_name": data[7],"country_name": data[8], "photo": data[9], "bhk": data[10], "prop_size": data[11], "price": data[12], "furniture": data[13], "sell_or_rent": data[14], "dis": data[15], "prop_deal": data[16], "prop_type": data[17]}
@@ -85,7 +75,7 @@ def aa_data(p_id):
 
 
 # fetching some data from database
-@prop.get('/sdata')
+@prop.get('/fetch_some_fields')
 def ss_data():
     c = ["p_id", "photo", "city_name", "state_name", "bhk", "price", "prop_size"]
     data = s_data()
@@ -106,44 +96,13 @@ def deleting(p_id):
     return jsonify({"message":"Record deleted"})
 
 
-#fetching my(individual user's pendding prop) data from databse
-@prop.get('/pendding_my_data/<u_id>')
-def my_data(u_id):
-    data = pendding_my_prop(u_id)
-    c = ["p_id", "u_id", "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name","country_name", "photo", "bhk", "prop_size", "price", "furniture", "sell_or_rent",  "dis", "prop_deal", "prop_type", "ddate", "status"] 
-        
-    new_data = []
-    for r in data:
-        d = {}
-        for i in range(20):
-            d[c[i]] = r[i]
-        new_data.append(d)
-    
-    return jsonify(new_data)
-
-
-#fetching my(individual user's verified prop) data from databse
-@prop.get('/verified_my_data/<u_id>')
-def verified_my_data(u_id):
-    data = verified_my_prop(u_id)
-    c = ["p_id", "u_id", "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name","country_name", "photo", "bhk", "prop_size", "price", "furniture", "sell_or_rent",  "dis", "prop_deal", "prop_type", "ddate", "status"] 
-        
-    new_data = []
-    for r in data:
-        d = {}
-        for i in range(20):
-            d[c[i]] = r[i]
-        new_data.append(d)
-    
-    return jsonify(new_data)
-
-
-
-
 #fetching my(individual user's rejected prop) data from databse
-@prop.get('/rejected_my_data/<u_id>')
-def rejected_my_data(u_id):
-    data = rejected_my_prop(u_id)
+@prop.get('/my_data/<u_id>/<status>')
+def my_data(u_id, status):
+    # u_id = request.headers.get("Authorization")
+    print(u_id, type(u_id))
+    # u_id = tokan_to_u_id(token)
+    data = my_prop(u_id, status)
     c = ["p_id", "u_id", "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name","country_name", "photo", "bhk", "prop_size", "price", "furniture", "sell_or_rent",  "dis", "prop_deal", "prop_type", "ddate", "status"] 
         
     new_data = []

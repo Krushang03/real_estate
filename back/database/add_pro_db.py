@@ -16,11 +16,11 @@ def a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, 
     
     
     
-#Feching listed data from table property
+#Feching some data from table property
 def s_data():
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT p_id, photo, city_name, state_name, bhk, price, prop_size FROM property")
+    cursor.execute(f"SELECT p_id, photo, city_name, state_name, bhk, price, prop_size FROM property where statuss = 'verified'")
     data = cursor.fetchall()
     conn.commit()
     cursor.close()
@@ -44,39 +44,12 @@ def a_data(p_id):
 
 
 
-#my_property details of pendding prop
-def pendding_my_prop(u_id):
-    conn = connection()
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM property WHERE u_id = '{u_id}' and statuss = 'pendding' ")
-    data = cursor.fetchall()
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return data
-
-
-#my_property details of verified
-def verified_my_prop(u_id):
-    conn = connection()
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM property WHERE u_id = '{u_id}' and statuss = 'verified'")
-    data = cursor.fetchall()
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return data
-
-
-
-
-
 
 #my_property details of rejected
-def rejected_my_prop(u_id):
+def my_prop(u_id, status):
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM property WHERE u_id = '{u_id}' and statuss = 'rejected'")
+    cursor.execute(f"SELECT * FROM property WHERE u_id = '{u_id}' and statuss = '{status}'")
     data = cursor.fetchall()
     conn.commit()
     cursor.close()

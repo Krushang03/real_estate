@@ -34,17 +34,16 @@ def verified_prop():
 
 
 
-#fetching verified properties from the database
-# def status_change():
-#     conn = connection()
-#     cursor = conn.cursor()
+#changing status
+def status_change(p_id, new_status):
+    conn = connection()
+    cursor = conn.cursor()
 
-#     cursor.execute(f"UPDATE proprty")
+    cursor.execute(f"UPDATE property set statuss = '{new_status}' where p_id = '{p_id}'")
 
-#     data = cursor.fetchall()
 
-#     conn.commit()
-#     cursor.close()
-#     conn.close()
+    conn.commit()
+    cursor.close()
+    conn.close()
 
-#     return data
+    return None
