@@ -11,7 +11,7 @@ export const del_prop_action = createAsyncThunk(
       const result = await axios.delete(`${backendURL}/del_re/${ids.id}`, ids, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": ids.uid,
+          // "Authorization": ids.uid,
            
         },
       });

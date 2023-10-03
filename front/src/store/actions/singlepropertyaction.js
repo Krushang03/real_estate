@@ -7,7 +7,7 @@ export const single_prop = createAsyncThunk(
   "singleprop/get",
   async (id, { rejectWithValue }) => {
     try {
-      const result = await axios.get(`${backendURL}/adata/${id}`, {
+      const result = await axios.get(`${backendURL}/fetch_all_data/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },

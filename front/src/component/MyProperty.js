@@ -1,55 +1,105 @@
 import React from 'react'
-import { my_prop_pending_Action } from '../store/actions/myProperty'
+import { my_prop_Action } from '../store/actions/myProperty'
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom"
 import { del_prop_action } from '../store/actions/delPropAction';
+import { useForm } from "react-hook-form";
 
 const MyProperty = () => {
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { errors },
+    reset,
+  } = useForm({
+  });
+
   const { usersproppendding } = useSelector((state) => state.myprop);
   const { U_id, refresh } = useSelector((state) => state.addprop);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [uid, setuid] = useState()
-  const [pendingdata, setpendingdata] = useState();
-  useEffect(() => {
-    if (U_id?.length === 0) {
-      setuid(uid);
-    }
-    if (U_id?.length > 0) {
-      setuid(U_id);
-    }
-  }, [refresh, U_id])
-  console.log(uid, "uid");
+  const [mypropdata, setmypropdata] = useState();
 
   useEffect(() => {
-    dispatch(my_prop_pending_Action(uid));
-  }, [uid, refresh]);
+    const a = "pending"
+    dispatch(my_prop_Action(a));
+  }, [refresh]);
 
   useEffect(() => {
     if (usersproppendding) {
-      setpendingdata(usersproppendding)
+      setmypropdata(usersproppendding)
     }
   }, [usersproppendding])
 
   const deletePropetry = (id) => {
     const ids = {
-      id,
-      uid
+      id
     }
-    const update = pendingdata.filter((val) => val.p_id !== id)
-    setpendingdata(update)
+    const update = mypropdata.filter((val) => val.p_id !== id)
+    setmypropdata(update)
     dispatch(del_prop_action(ids))
   }
-
+  const mypropcng = (e) => {
+    dispatch(my_prop_Action(e));
+  }
   return (
     <div>
       <div className="col-md-12">
         <div className="row d-flex justify-content-evenly gy-3 m-5">
-          {pendingdata?.length > 0 ?
-            pendingdata.map((curval, index) => (
+        <h1 className='d-flex justify-content-center'>My Properties</h1>
+          <div className="d-flex justify-content-center align-items-center">
+            <input
+              type="radio"
+              id=""
+              value="pending"
+              defaultChecked
+              className="form-radio ms-2"
+              {...register("myproperty")}
+              onChange={(e) => mypropcng(e.target.value)}
+            />
+            <label
+              className="form-check-label ms-2"
+              htmlFor="flexRadioDefault2"
+            >
+              Pending
+            </label>
+            <input
+              type="radio"
+              id=""
+              value="verified"
+              className="form-radio ms-4"
+              {...register("myproperty")}
+              onChange={(e) => mypropcng(e.target.value)}
+            />
+            <label
+              className="form-check-label ms-2"
+              htmlFor="flexRadioDefault2"
+            >
+              Verified
+            </label>
+            <input
+              type="radio"
+              id=""
+              value="rejected"
+              className="form-radio ms-4"
+              {...register("myproperty")}
+              onChange={(e) => mypropcng(e.target.value)}
+            />
+            <label
+              className="form-check-label ms-2"
+              htmlFor="flexRadioDefault2"
+            >
+              Rejected
+            </label>
+          </div>
+          <hr />
+          {mypropdata?.length > 0 ?
+            mypropdata.map((curval, index) => (
               <>
                 <div className="col-lg-3 col-md-6 col-sm-6 ">
                   <div class="card p-3" >

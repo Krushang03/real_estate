@@ -3,15 +3,16 @@ import axios from "axios";
 
 const backendURL = "http://127.0.0.1:5000";
 
-export const my_prop_pending_Action = createAsyncThunk(
+export const my_prop_Action = createAsyncThunk(
   "myprop/pendding",
-  async (id, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      // const uid = JSON.parse(localStorage.getItem("U_id"));
-      const result = await axios.get(`${backendURL}/pendding_my_data/${id}`, id , {
+      const userDetail = JSON.parse(localStorage.getItem("userInfo"));
+      console.log(userDetail.token);
+      const result = await axios.get(`${backendURL}/my_data/${userDetail.u_id}/${data}`, data ,{
         headers: {
           "Content-Type": "application/json",
-          // Authorization: uid,
+          // "Authorization": userDetail.token,
         },
       });
       console.log(result, "res rejected my prop");

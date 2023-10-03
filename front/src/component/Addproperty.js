@@ -30,9 +30,9 @@ const schema = yup.object({
   state_name: yup.string().required("please select state"),
   country_name: yup.string().required("please select country"),
   sell_or_rent: yup.string().required("please select one of the option"),
-  bhk: yup.number().typeError("please enter your bhk").required(),
-  prop_size: yup.number().typeError("please enter house size").required(),
-  price: yup.number().typeError("please enter price").required(),
+  bhk: yup.number().min(0).typeError("please enter your bhk").required(),
+  prop_size: yup.number().min(0).typeError("please enter house size").required(),
+  price: yup.number().min(0).typeError("please enter price").required(),
   furniture: yup.string().required("please select one of the option"),
   dis: yup.string().required("please provide discription for property"),
 });
@@ -73,9 +73,9 @@ const Addproperty = () => {
     setphotos(empty);
     setlightbill(empty);
     setlightbillprv(empty);
-    setlightbillprv("")
     setimgerr("")
     setimglenerr("")
+    setlightbillprverr("")
   };
 
   useEffect(() => {
@@ -99,45 +99,33 @@ const Addproperty = () => {
     const files = e.target.files;
     const imagePromises = [];
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file) {
-        const reader = new FileReader();
-        imagePromises.push(
-          new Promise((resolve) => {
-            reader.onload = (e) => {
-              resolve(e.target.result);
-            };
-            reader.readAsDataURL(file);
-          })
-        );
+    if (files.length > 5) {
+      setimglenerr('Maximum images allowed is five')
+      setimgerr("")
+    } else {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file) {
+          const reader = new FileReader();
+          imagePromises.push(
+            new Promise((resolve) => {
+              reader.onload = (e) => {
+                resolve(e.target.result);
+              };
+              reader.readAsDataURL(file);
+            })
+          );
+        }
       }
+
+      Promise.all(imagePromises).then((results) => {
+        setimages(results);
+      });
     }
-
-    Promise.all(imagePromises).then((results) => {
-      setimages(results);
-    });
-
-    // const imgurl = Array.from(files)?.map((file) => {
-    //     return URL.createObjectURL(file)
-    //   })
-    // // setphotos(files)
-    // setimages(imgurl)
-
-    // for (let i = 0; i < files.length; i++) {
-    //   const file = Array.from(files)
-    //   setphotos(file)
-    // }
   }
 
   const uploadimagelightbill = (e) => {
     const files2 = e.target.files;
-    // // const imgurl2 = Array.from(files2)?.map((file) => {
-    // //    URL.createObjectURL(file)
-    // // })
-    // // setlightbillprv(imgurl2)
-    // const lightbill = window.URL.createObjectURL(files2)
-    // setlightbillprv([lightbill])
 
     const imagePromises2 = [];
 
@@ -160,35 +148,10 @@ const Addproperty = () => {
     Promise.all(imagePromises2).then((results) => {
       setlightbillprv(results);
     });
-
-    // const file2 = Array.from(files2)
-    // setlightbill(file2)
   }
-  console.log(lightbillprv, "lightbill")
 
   const onSubmit = (data) => {
-    // fd.append("Holder_name", data.Holder_name);
-    // fd.append("mobile_no", data.mobile_no);
-    // fd.append("house_no", data.house_no);
-    // fd.append("area_name", data.area_name);
-    // fd.append("city_name", data.city_name);
-    // fd.append("prop_type", data.prop_type);
-    // fd.append("state_name", data.state_name);
-    // fd.append("country_name", data.country_name);
-    // fd.append("sell_or_rent", data.sell_or_rent);
-    // fd.append("bhk", data.bhk);
-    // fd.append("prop_size", data.prop_size);
-    // fd.append("price", data.price);
-    // fd.append("furniture", data.furniture);
-    // fd.append("dis", data.dis);
-    // Array.from(photos).map((file) => {
-    //   fd.append("photo", file)
-    // })
-    // Array.from(lightbill).map((file) => {
-    //   fd.append("lightbill", file)
-    // })
 
-    // console.log(fd, "fd");
     const item = {
       Holder_name: data.Holder_name,
       mobile_no: data.mobile_no,
@@ -223,7 +186,7 @@ const Addproperty = () => {
       const err2 = "You need to provide an image";
       setimgerr(err2);
     }
-    if (!lightbillprv) {
+    if (lightbillprv.length === 0) {
       const err3 = "You need to provide lightbill";
       setlightbillprverr(err3);
     }
@@ -289,6 +252,7 @@ const Addproperty = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 encType="multipart/form-data"
               >
+
                 <div className="col-md-5">
                   <div className="form-floating mb-3">
                     <input
@@ -302,10 +266,11 @@ const Addproperty = () => {
                   </div>
                   {errors && <p className="errormsg">{errors.Holder_name?.message}</p>}
                 </div>
+
                 <div className="col-md-5">
                   <div className="form-floating mb-3">
                     <input
-                      type="number"
+                      type="int"
                       className="form-control"
                       id="floatingInput"
                       placeholder="name@example.com"
@@ -432,10 +397,11 @@ const Addproperty = () => {
                     <div className="col-md-4">
                       <div className="form-floating mb-3">
                         <input
-                          type="number"
+                          type="int"
                           className="form-control"
                           id="floatingInput"
                           placeholder="BHK"
+                          min={0}
                           {...register("bhk")}
                           name="bhk"
                         />
@@ -447,7 +413,7 @@ const Addproperty = () => {
                     <div className="col-md-4">
                       <div className="form-floating mb-3">
                         <input
-                          type="number"
+                          type="int"
                           className="form-control"
                           id="floatingInput"
                           placeholder="prop_size"
@@ -463,7 +429,7 @@ const Addproperty = () => {
                     <div className="col-md-4">
                       <div className="form-floating mb-3">
                         <input
-                          type="number"
+                          type="int"
                           className="form-control"
                           id="floatingInput"
                           {...register("price")}
@@ -583,7 +549,7 @@ const Addproperty = () => {
                           return (
                             <>
                               <div
-                                className="col-md-4 position-relative mb-4"
+                                className="col-md-6 col-sm-12 col-lg-4 position-relative mb-4"
                                 key={index}
                               >
                                 <img
@@ -595,7 +561,7 @@ const Addproperty = () => {
                                 />
 
                                 <FaTrash
-                                  className="text-danger btn-trash"
+                                  className="text-danger btn-trash trash"
                                   style={{ cursor: "pointer", right: "35px" }}
                                   // onClick={() => deleteimg(item.id)}
                                   onClick={() => deleteimgs(item, index)}
@@ -638,29 +604,8 @@ const Addproperty = () => {
                 {lightbillprv?.length > 0 &&
                   <div className="col-md-10">
                     <div className="row col-12 p-4 rounded" style={{ backgroundColor: "whitesmoke", marginLeft: "1px" }}>
-                      {/* {lightbillprv &&
-                        lightbillprv?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="col-md-6 position-relative mx-auto"
-                                key={index}
-                              >
-                                <img
-                                  // src={item.image}
-                                  src={item}
-                                  alt="img-preview"
-                                  className="img-fluid"
-                                  style={{ width: "100%", height: "280px" }}
-                                />
-                              </div>
-                            </>
-                          );
-                        }
-                        )
-                      } */}
                       {
-                        lightbillprv && <img src={lightbillprv} />
+                        lightbillprv && <img src={lightbillprv} style={{ width: "350px", height: "400px" }} />
                       }
                     </div>
                   </div>}

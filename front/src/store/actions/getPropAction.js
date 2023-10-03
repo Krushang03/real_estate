@@ -10,7 +10,7 @@ export const get_prop = createAsyncThunk(
     // console.log(userDetail);
     // const token = userDetail.token;
     try {
-      const result = await axios.get(`${backendURL}/sdata`, {
+      const result = await axios.get(`${backendURL}/fetch_some_fields`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: token,

@@ -22,3 +22,33 @@ body {
     z-index: 2;
 }
 
+@media screen and (max-width: 767px) {
+    .trash{
+        right: 75px !important;
+    }
+}
+@media screen and (max-width: 565px) {
+    .trash{
+        right: 85px !important;
+    }
+}
+@media screen and (max-width: 555px) {
+    .trash{
+        right: 75px !important;
+    }
+}
+@media screen and (max-width: 475px) {
+    .trash{
+        right: 55px !important;
+    }
+}
+@media screen and (max-width: 375px) {
+    .trash{
+        right: 25px !important;
+    }
+}
+@media screen and (max-width: 425px) {
+    .trash{
+        right: 25px !important;
+    }
+}
