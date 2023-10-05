@@ -36,7 +36,7 @@ def create_tables():
                         prop_type char(500) not null,
                         ddate varchar(200),
                         statuss varchar(200) not null,
-                        litebill text[] not null)
+                        lightbill text[] not null)
                         """)
     conn.commit()
     cursor.close()

@@ -1,12 +1,12 @@
 from database.connectionn import connection
 
 #Adding properties into the database
-def a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate, statuss, litebill):
+def a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate, statuss, lightbill):
     
     
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(f"""INSERT INTO property(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate, statuss, litebill) VALUES ('{p_id}', '{u_id}', '{Holder_name}', {mobile_no}, '{house_no}', '{area_name}', '{state_name}', '{city_name}', '{country_name}', ARRAY {photo}  , '{bhk}', '{prop_size}', {price}, '{furniture}','{sell_or_rent}', '{dis}',{prop_deal}, '{prop_type}', {ddate}, '{statuss}',  ARRAY {litebill})""")
+    cursor.execute(f"""INSERT INTO property(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, city_name, country_name, photo, bhk, prop_size, price, furniture, sell_or_rent, dis, prop_deal, prop_type, ddate, statuss, lightbill) VALUES ('{p_id}', '{u_id}', '{Holder_name}', {mobile_no}, '{house_no}', '{area_name}', '{state_name}', '{city_name}', '{country_name}', ARRAY {photo}  , '{bhk}', '{prop_size}', {price}, '{furniture}','{sell_or_rent}', '{dis}',{prop_deal}, '{prop_type}', {ddate}, '{statuss}',  ARRAY {lightbill})""")
     
     
     conn.commit()
@@ -72,6 +72,39 @@ def del_re(p_id):
     with conn.cursor() as cursor:
         cursor.execute(f"""DELETE FROM property WHERE p_id = '{p_id}' """)
     conn.commit()
+
+
+
+
+#fetching pending properties from the database
+def all_property():
+    conn = connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"SELECT * FROM property",)
+
+    data = cursor.fetchall()
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return data
+
+
+#change prop_deal to true
+def change_property_deal(p_id):
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE property set prop_deal = 'true' where p_id = '{p_id}'")
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return None
+
+
+
 
 #searching for perticular property address with help of  "country_name" or/and "city_name" or/and "state_name".
 # def searchh():

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 import jwt
 from passlib.hash import bcrypt
 from database.re_lo_db import *
@@ -18,7 +18,7 @@ def tokan_to_u_id(token):
 
 @login_api.post('/register')
 def register():
-    # try :
+    try :
         username = request.json.get('username')
         email = request.json.get('email')
         password = request.json.get('password')
@@ -42,17 +42,17 @@ def register():
         else:
                 c_user(u_id,username, email, hash_password, mobile_no, photo, admin)
                 token = generate_token(u_id)
-                return jsonify({'message': 'User created successfully','token': token,'username' : username}), 201
-    # except:
-    #     return jsonify({'message':'email is already used'}), 401
+                return jsonify({'message': 'User created successfully','token': token,'username' : username, "u_id":u_id}), 201
+    except:
+        return jsonify({'message':'email is already used'}), 401
 
 @login_api.post('/login')
 def login():
         email = request.json.get('email')
         hash_password = request.json.get('password')
         user = g_user(email)
-        u_id =  user[0]
         try:
+            u_id =  user[0]
 
             if(email==user[2]):
                 if bcrypt.verify(hash_password,user[3]):
@@ -144,7 +144,7 @@ def otp():
         s = smtplib.SMTP('smtp.gmail.com', 587)
         s.starttls()
         s.login("estate.explorer555@gmail.com", "aegu aoil mcjv hajk") 
-        message = f"your otp is {otp}"
+        message = render_template("email.html")
         s.sendmail("estate.explorer555@gmail.com", f"{email}", message)
         s.quit()
         
