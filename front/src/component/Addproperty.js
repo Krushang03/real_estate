@@ -15,6 +15,8 @@ import axios from "axios";
 const schema = yup.object({
   Holder_name: yup
     .string()
+    .min(4, "name must be above 4 characters")
+    .max(20, "name must be with in 20 characters")
     // .matches(/^\S*$/, "No whitespaces allowed")
     .required("please enter your name"),
   mobile_no: yup
@@ -23,18 +25,18 @@ const schema = yup.object({
     .matches(/^[0-9]+$/, "Must be only digits")
     .min(10, "Must be exactly 10 digits")
     .max(10, "Must be exactly 10 digits"),
-  house_no: yup.string().required("please enter house number and society name"),
-  area_name: yup.string().required("please enter area name"),
+  house_no: yup.string().min(4, "house number and society name must be above 4 characters or digits").required("please enter house number and society name"),
+  area_name: yup.string().min(4, "area name must be above 4 characters").required("please enter area name"),
   city_name: yup.string().required("please select city"),
   prop_type: yup.string().required("please select property type"),
   state_name: yup.string().required("please select state"),
   country_name: yup.string().required("please select country"),
   sell_or_rent: yup.string().required("please select one of the option"),
-  bhk: yup.number().min(0).typeError("please enter your bhk").required(),
-  prop_size: yup.number().min(0).typeError("please enter house size").required(),
-  price: yup.number().min(0).typeError("please enter price").required(),
+  bhk: yup.number().min(1, "bhk must be above 1").max(8, "bhk must be with in 8").typeError("please enter your bhk").required(),
+  prop_size: yup.number().min(600, "property size must be above 600 sqft").max(2500, "property size must be with in 2500 sqft").typeError("please enter house size").required(),
+  price: yup.number().min(5000, "price must be above 5000 rs").typeError("please enter price").required(),
   furniture: yup.string().required("please select one of the option"),
-  dis: yup.string().required("please provide discription for property"),
+  dis: yup.string().min(20, "discription must be above 20 characters").required("please provide discription for property"),
 });
 
 const Addproperty = () => {
@@ -168,7 +170,7 @@ const Addproperty = () => {
       furniture: data.furniture,
       dis: data.dis,
       photo: images,
-      litebill: lightbillprv
+      lightbill: lightbillprv
     }
     console.log(item);
     if (images.length > 0 && lightbillprv.length > 0) {
@@ -176,7 +178,6 @@ const Addproperty = () => {
       reset();
       setimages(empty);
       dispatch(add_prop(item));
-      navigate("/myproperty")
     }
 
   };

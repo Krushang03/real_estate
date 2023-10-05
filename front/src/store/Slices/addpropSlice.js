@@ -6,6 +6,7 @@ const addPropSlice = createSlice({
     initialState: {
       loading: false,
       refresh: false,
+      propertyadded: false,
       error: null,
       U_id: null,
     },
@@ -18,6 +19,7 @@ const addPropSlice = createSlice({
       [add_prop.fulfilled]: (state, { payload }) => {
         state.loading = false;
         state.refresh = true;
+        state.propertyadded = true;
         state.error = null;
         state.U_id = payload.U_id;
       },

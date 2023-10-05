@@ -8,7 +8,6 @@ export const my_prop_Action = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const userDetail = JSON.parse(localStorage.getItem("userInfo"));
-      console.log(userDetail.token);
       const result = await axios.get(`${backendURL}/my_data/${userDetail.u_id}/${data}`, data ,{
         headers: {
           "Content-Type": "application/json",
