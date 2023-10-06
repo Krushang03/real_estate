@@ -144,7 +144,7 @@ def otp():
         s = smtplib.SMTP('smtp.gmail.com', 587)
         s.starttls()
         s.login("estate.explorer555@gmail.com", "aegu aoil mcjv hajk") 
-        message = render_template("email.html")
+        message = render_template("html_design.html", otp = otp)
         s.sendmail("estate.explorer555@gmail.com", f"{email}", message)
         s.quit()
         

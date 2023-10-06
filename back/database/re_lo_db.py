@@ -132,4 +132,3 @@ def del_otp(u_id, otp):
     conn.commit()
     cursor.close()
     conn.close()
-

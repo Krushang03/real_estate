@@ -119,12 +119,13 @@ def my_data(u_id, status):
 @prop.get('/all_prop')
 def all_propp():
     data = all_property()
-    key = ["p_id", "u_id",  "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name", "country_name", "photo_path", "bhk", "prop_size", "price", "furniture", "sell_or_rent", "dis",  "prop_deal", "prop_type", "ddate", "status"]
+    key = ["p_id", "u_id",  "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name", "country_name", "photo_path", "bhk", "prop_size", "price", "furniture", "sell_or_rent", "dis",  "prop_deal", "prop_type", "ddate", "status", "lightbill"]
+    
     
     new_data = []
     for data in data:
         d = {}
-        for i in range(20):
+        for i in range(21):
             d[key[i]] = data[i]
         new_data.append(d)
     return jsonify(new_data)
@@ -141,6 +142,3 @@ def change_prop_deal(p_id):
     return jsonify({'message':'Changed successfully'})
 
 
-
-#searching for perticular property address with help of  "country_name" or/and "city_name" or/and "state_name".
-#arean name, country_name, city name, state name if one given then it has to work.
