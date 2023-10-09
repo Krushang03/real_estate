@@ -20,7 +20,7 @@ def a_prop(p_id, u_id, Holder_name, mobile_no, house_no, area_name, state_name, 
 def s_data():
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(f"SELECT p_id, photo, city_name, state_name, bhk, price, prop_size FROM property where statuss = 'verified'")
+    cursor.execute(f"SELECT p_id, Holder_name, state_name,city_name,  photo,  bhk, prop_size, price, furniture, sell_or_rent, prop_deal, prop_type, ddate FROM property where statuss = 'verified' AND prop_deal = false ")
     data = cursor.fetchall()
     conn.commit()
     cursor.close()
@@ -76,12 +76,30 @@ def del_re(p_id):
 
 
 
+
+
 #fetching pending properties from the database
 def all_property():
     conn = connection()
     cursor = conn.cursor()
 
     cursor.execute(f"SELECT * FROM property",)
+
+    data = cursor.fetchall()
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return data
+
+
+#fetching pending properties from the database where prop_deal = true
+def all_property_propdeal_true():
+    conn = connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"SELECT * FROM property where prop_deal = 'true'",)
 
     data = cursor.fetchall()
 

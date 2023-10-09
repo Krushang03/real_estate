@@ -40,8 +40,8 @@ def change_statuss(p_id, new_status):
     # token = request.headers.get("Authorization")
     # u_id = tokan_to_u_id(token)
     # count = user_auth(u_id)
-    # if count==1:
     status_change(p_id, new_status)
+    # if count==1:
     return jsonify({"message": "Your status has been updated"})
     # else:
-        # return jsonify({'message':'User not found'})
+    #     return jsonify({'message':'User not found'})

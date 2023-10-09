@@ -2,12 +2,10 @@ from flask import Blueprint, jsonify, request
 from database.create__table import create_tables
 from database.add_pro_db import *
 import uuid
-from datetime import date
 from api.register import tokan_to_u_id
 
 prop = Blueprint('prop', __name__)
 create_tables()
-
 
 
 
@@ -36,10 +34,8 @@ def add_prop():
     prop_deal = "false"
     prop_type = request.json.get("prop_type")
     statuss = "pending"
-    ddate = date.today()
     p_id = uuid.uuid4()
-    print(ddate)
-    
+    ddate = request.json.get("ddate")
     
     
     
@@ -77,12 +73,12 @@ def aa_data(p_id):
 # fetching some data from database
 @prop.get('/fetch_some_fields')
 def ss_data():
-    c = ["p_id", "photo", "city_name", "state_name", "bhk", "price", "prop_size"]
+    c = ["p_id", "Holder_name", "state_name","city_name",  "photo",  "bhk", "prop_size", "price", "furniture", "sell_or_rent", "prop_deal", "prop_type", "ddate"]
     data = s_data()
     new_data = []
     for r in data:
         d = {}
-        for i in range(7):
+        for i in range(13):
             d[c[i]] = r[i]
         new_data.append(d)
     return jsonify(new_data)
@@ -115,10 +111,29 @@ def my_data(u_id, status):
 
 
 
+
 #all data show
 @prop.get('/all_prop')
-def all_propp():
+def all_prop():
     data = all_property()
+    key = ["p_id", "u_id",  "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name", "country_name", "photo_path", "bhk", "prop_size", "price", "furniture", "sell_or_rent", "dis",  "prop_deal", "prop_type", "ddate", "status", "lightbill"]
+    
+    
+    new_data = []
+    for data in data:
+        d = {}
+        for i in range(21):
+            d[key[i]] = data[i]
+        new_data.append(d)
+    return jsonify(new_data)
+
+
+
+
+#all data property where prop deal true
+@prop.get('/display_prop_deal')
+def prop_deal_true():
+    data = all_property_propdeal_true()
     key = ["p_id", "u_id",  "Holder_name", "mobile_no", "house_no", "area_name", "state_name", "city_name", "country_name", "photo_path", "bhk", "prop_size", "price", "furniture", "sell_or_rent", "dis",  "prop_deal", "prop_type", "ddate", "status", "lightbill"]
     
     
@@ -137,7 +152,6 @@ def all_propp():
 
 @prop.patch('/change_prop_deal/<p_id>')
 def change_prop_deal(p_id):
-    token = request.headers.get("Authorization")
     change_property_deal(p_id)
     return jsonify({'message':'Changed successfully'})
 

@@ -21,7 +21,6 @@ def search_prop(city_name, state_name, country_name, area_name):
     if area_name:
         query += " AND area_name = %s"
         params.append(area_name)
-    print(query)    
     cursor.execute(query, params)
     data = cursor.fetchall()
     conn.commit()

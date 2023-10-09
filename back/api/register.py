@@ -120,6 +120,7 @@ def user_data():
     token = request.headers.get("Authorization")
     u_id = tokan_to_u_id(token)
     d = data_of_user(u_id)
+    print(d)
     data = {"Username":d[1],"email":d[2],"mobile_no":d[4],"photo":d[5]}
     return data
 
@@ -144,7 +145,7 @@ def otp():
         s = smtplib.SMTP('smtp.gmail.com', 587)
         s.starttls()
         s.login("estate.explorer555@gmail.com", "aegu aoil mcjv hajk") 
-        message = render_template("html_design.html", otp = otp)
+        message = f"{otp} is your otp"
         s.sendmail("estate.explorer555@gmail.com", f"{email}", message)
         s.quit()
         
