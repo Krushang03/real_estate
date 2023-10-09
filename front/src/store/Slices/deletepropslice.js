@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { del_prop_action } from "../actions/delPropAction";
 
-const addPropSlice = createSlice({
+const delPropSlice = createSlice({
     name: "delprop",
     initialState: {
       loading: false,
@@ -30,5 +30,5 @@ const addPropSlice = createSlice({
     },
   });
   
-  export default addPropSlice.reducer;
+  export default delPropSlice.reducer;
   

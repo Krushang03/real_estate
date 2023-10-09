@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "../Style/Header.css";
-import  logo  from "../images/logo.png";
+import logo from "../images/logo.png";
 import Profile from "./Profile";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -26,7 +26,7 @@ const Header = () => {
             id="logotext"
             to="./"
           >
-            <img src={logo} style={{maxWidth:"140px"}} alt="logo" />
+            <img src={logo} style={{ maxWidth: "140px" }} alt="logo" />
           </NavLink>
           <button
             className="navbar-toggler"
@@ -51,6 +51,16 @@ const Header = () => {
                   </span>
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink className="nav-link nav-text" to="/allproperty">
+                  <span
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse.show"
+                  >
+                    Properties
+                  </span>
+                </NavLink>
+              </li>
               {userDetail ? (
                 <>
                   <li className="nav-item">
@@ -60,16 +70,6 @@ const Header = () => {
                         data-bs-target=".navbar-collapse.show"
                       >
                         Services
-                      </span>
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link nav-text" to="/allproperty">
-                      <span
-                        data-bs-toggle="collapse"
-                        data-bs-target=".navbar-collapse.show"
-                      >
-                        Properties
                       </span>
                     </NavLink>
                   </li>

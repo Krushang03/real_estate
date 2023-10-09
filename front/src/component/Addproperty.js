@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "../Style/addproperty.css";
 import { add_prop } from "../store/actions/addProperty";
 import { FaTrash } from "react-icons/fa";
+import { BiDollar } from "react-icons/bi";
 import axios from "axios";
 
 const schema = yup.object({
@@ -34,7 +35,7 @@ const schema = yup.object({
   sell_or_rent: yup.string().required("please select one of the option"),
   bhk: yup.number().min(1, "bhk must be above 1").max(8, "bhk must be with in 8").typeError("please enter your bhk").required(),
   prop_size: yup.number().min(600, "property size must be above 600 sqft").max(2500, "property size must be with in 2500 sqft").typeError("please enter house size").required(),
-  price: yup.number().min(5000, "price must be above 5000 rs").typeError("please enter price").required(),
+  price: yup.number().min(50, "price must be above $50").typeError("please enter price").required(),
   furniture: yup.string().required("please select one of the option"),
   dis: yup.string().min(20, "discription must be above 20 characters").required("please provide discription for property"),
 });
@@ -153,7 +154,13 @@ const Addproperty = () => {
   }
 
   const onSubmit = (data) => {
+    const d = new Date();
+    let day = d.getDay() + 1;
+    let month = d.getMonth() + 1;
+    let year = d.getFullYear();
+    const date = `${day}-${month}-${year}`
 
+    console.log(date);
     const item = {
       Holder_name: data.Holder_name,
       mobile_no: data.mobile_no,
@@ -170,7 +177,8 @@ const Addproperty = () => {
       furniture: data.furniture,
       dis: data.dis,
       photo: images,
-      lightbill: lightbillprv
+      lightbill: lightbillprv,
+      ddate: date
     }
     console.log(item);
     if (images.length > 0 && lightbillprv.length > 0) {
@@ -436,7 +444,7 @@ const Addproperty = () => {
                           {...register("price")}
                           placeholder="Price"
                         />
-                        <label htmlFor="floatingInput">Price</label>
+                        <label htmlFor="floatingInput">Price(<BiDollar />)</label>
                       </div>
                       {errors && <p className="errormsg">{errors.price?.message}</p>}
                     </div>

@@ -62,7 +62,9 @@
 .home {
     position: relative;
 }
-
+.slider1 .slider-wrapper {
+    height: 90vh;
+}
 .search {
     position: absolute;
     left: 50%;
