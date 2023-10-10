@@ -240,7 +240,6 @@ const MyProperty = () => {
             mypropdata?.map((val, index) => {
               return (
                 <>
-                  {/* {val.prop_size === "2000" && */}
                     <div className='col-md-5 col-lg-4 my-4 mx-md-2 mx-lg-0 d-flex justify-content-center' style={{ cursor: "pointer" }}>
                       <div className='card'>
                         <div class="card__image-holder">
@@ -256,7 +255,6 @@ const MyProperty = () => {
                         <NavLink to={`/myproperty/${val?.p_id}`} style={{ textDecoration: "none", color: "black" }}>
                           <div className='border-card'>
                             <div className='text-center card-address'>
-                              {/* <h5 style={{ margin: "0" }}>{val.house_no}</h5> */}
                               <p className='text-uppercase'>
                                 <FaLocationDot className='card-icon' /> : {val.city_name},{val.state_name}
                               </p>
@@ -298,7 +296,6 @@ const MyProperty = () => {
                         </NavLink>
                       </div>
                     </div>
-                    {/* } */}
                 </>
               )
             })

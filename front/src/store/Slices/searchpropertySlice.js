@@ -4,6 +4,7 @@ import { SearchPropAction } from "../actions/searchpropertyAction";
 const initialState = {
     loading: false,
     searchdata: [],
+    searchdataNavigate: null,
     error: null,
     success: false,
 };
@@ -12,7 +13,9 @@ const SearchPropSlice = createSlice({
     name: "searchprop",
     initialState,
     reducers: {
-
+         ClearSearchData: (state) => {
+            state.searchdata = null;
+          },
     },
     extraReducers: {
         [SearchPropAction.pending]: (state) => {
@@ -30,4 +33,5 @@ const SearchPropSlice = createSlice({
         },
     },
 });
+export const { ClearSearchData } = SearchPropSlice.actions;
 export default SearchPropSlice.reducer;

@@ -154,11 +154,13 @@ const Addproperty = () => {
   }
 
   const onSubmit = (data) => {
-    const d = new Date();
-    let day = d.getDay() + 1;
-    let month = d.getMonth() + 1;
-    let year = d.getFullYear();
-    const date = `${day}-${month}-${year}`
+    const date = new Date();
+    let currentDay= String(date.getDate()).padStart(2, '0');
+    let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+    let currentYear = date.getFullYear();    
+    let currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
+    
+    console.log(currentDate);
 
     console.log(date);
     const item = {
@@ -178,7 +180,7 @@ const Addproperty = () => {
       dis: data.dis,
       photo: images,
       lightbill: lightbillprv,
-      ddate: date
+      ddate: currentDate
     }
     console.log(item);
     if (images.length > 0 && lightbillprv.length > 0) {

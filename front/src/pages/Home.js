@@ -10,7 +10,16 @@ import { SearchPropAction } from "../store/actions/searchpropertyAction"
 import { useDispatch, useSelector } from "react-redux"
 import { ColorRing } from "react-loader-spinner"
 import { toast } from 'react-toastify';
-
+import { ClearSearchData } from "../store/Slices/searchpropertySlice";
+import { IoIosBed } from 'react-icons/io';
+import { FaLocationDot } from 'react-icons/fa6';
+import { FaBuilding } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
+import { BiTime } from 'react-icons/bi';
+import { BiDollar } from 'react-icons/bi';
+import { FaTrashAlt } from 'react-icons/fa';
+import { RiHome4Line } from 'react-icons/ri';
+import { BiArea } from 'react-icons/bi';
 
 const Home = ({ setShow }) => {
   const dispatch = useDispatch()
@@ -19,12 +28,13 @@ const Home = ({ setShow }) => {
   const [searchitem, setsearchitem] = useState()
   const [searchitemerr, setsearchitemerr] = useState()
   const [nodata, setnodata] = useState()
+  const [showerrmsg, setshowerrmsg] = useState(false)
+  const [searchitemview, setsearchitemview] = useState(false)
 
   useEffect(() => {
-    // if (searchdata) {
-    //   setsearchitem(searchdata)
-    //   console.log(searchitem);
-    // }
+    if (searchdata) {
+      setsearchitem(searchdata)
+    }
   }, [searchdata, success])
 
   useEffect(() => {
@@ -33,6 +43,7 @@ const Home = ({ setShow }) => {
 
   useEffect(() => {
     worldDataApi();
+    ClearSearchData()
   }, []);
 
   const {
@@ -73,7 +84,7 @@ const Home = ({ setShow }) => {
     let cityname = [...new Set(allcity.map((ele) => ele.name))];
     setcity(cityname);
   };
-  // const [disable, setdisable] = useState()
+  const [search, setsearch] = useState()
   const onSubmit = (data) => {
     const item = {
       area_name: data.area_name,
@@ -81,50 +92,74 @@ const Home = ({ setShow }) => {
       state_name: data.state_name,
       country_name: data.country_name
     }
-    console.log(item,"item");
     reset({
       country_name: "",
       area_name: "",
       state_name: "",
       city_name: ""
     })
-    if (data.area_name.length > 0 || data.city_name.length > 0 || data.state_name.length > 0 || data.country_name.length > 0) {
-      if (searchdata) {
-        setsearchitem(searchdata)
-        console.log(searchitem);
-      }
-      dispatch(SearchPropAction(item))
-      // setsearchitemerr("")
-      setTimeout(() => {
-        ref.current?.scrollIntoView({ behavior: "smooth" })
-      }, [500])
-      if(searchitem?.length === 0){
-        setnodata("no available data")
-      }
-    }
-
     if (data.area_name.length === 0 && data.city_name.length === 0 && data.state_name.length === 0 && data.country_name.length === 0) {
-      if (searchdata.length === 0) {
-        setsearchitemerr("Please enter one of this fields")
-        // toast.error('Please enter one of the search field', {
-        //   position: "top-right",
-        //   autoClose: 2500,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "colored",
-        // });
+      setsearchitemerr("Please enter one of this fields")
+      setshowerrmsg(false)
+    }
+    if (showerrmsg && (data.area_name.length === 0 && data.city_name.length === 0 && data.state_name.length === 0 && data.country_name.length === 0)) {
+      setsearchitemerr("")
+    }
+    if (search) {
+      if (data.area_name.length > 0 || data.city_name.length > 0 || data.state_name.length > 0 || data.country_name.length > 0) {
+
+        if (searchitem?.length === 0 || !searchdata || !searchitem || searchdata?.length === 0 || searchitem?.length === null || searchdata?.length === null) {
+          setnodata("no available data")
+        }
+
+        if ((searchdata?.length > 0 || searchitem?.length > 0) && searchitemview === true) {
+          setnodata(" ")
+        }
+
+        dispatch(SearchPropAction(item))
+
+        setTimeout(() => {
+          ref.current?.scrollIntoView({ behavior: "smooth" })
+        }, [500])
       }
     }
-
   }
   const Clear = () => {
+    if (search) {
+      setsearch(null)
+    }
     setsearchitemerr("")
-    setsearchitem(null)
-    setnodata("")
+    setshowerrmsg(true)
+    dispatch(ClearSearchData())
+    if (searchitem) {
+      setsearchitem(null)
+      setsearchitemview(true)
+    }
+    setnodata(null)
+    reset({
+      country_name: "",
+      area_name: "",
+      state_name: "",
+      city_name: ""
+    })
   }
+
+  const HandleError = (e) => {
+    setsearch({ ...search, [e.target.name]: e.target.value })
+    setsearchitemview(false)
+  }
+  useEffect(() => {
+    if (search) {
+      setsearchitemerr("")
+    }
+  }, [search])
+
+  useEffect(() => {
+    if (searchitemview === false && searchdata) {
+      setsearchitem(searchdata)
+    }
+  }, [searchitem])
+
   return (
     <>
       <section className="home">
@@ -193,6 +228,7 @@ const Home = ({ setShow }) => {
                   className="form-control address"
                   {...register("area_name")}
                   style={{ height: "56px" }}
+                  onChange={(e) => HandleError(e)}
                 />
               </div>
               <div className="col-md-2 select">
@@ -202,7 +238,7 @@ const Home = ({ setShow }) => {
                     id="floatingSelect"
                     aria-label="Floating label select example"
                     {...register("country_name", {
-                      onChange: (e) => handleState(e.target.value),
+                      onChange: (e) => [handleState(e.target.value), HandleError(e)],
                     })}
                   >
                     <option value="" defaultValue>
@@ -226,7 +262,7 @@ const Home = ({ setShow }) => {
                     id="floatingSelect"
                     aria-label="Floating label select example"
                     {...register("state_name", {
-                      onChange: (e) => handleCity(e.target.value),
+                      onChange: (e) => [handleCity(e.target.value), HandleError(e)],
                     })}
 
                   >
@@ -251,6 +287,7 @@ const Home = ({ setShow }) => {
                     id="floatingSelect"
                     aria-label="Floating label select example"
                     {...register("city_name")}
+                    onChange={(e) => HandleError(e)}
                   >
                     <option value="" defaultValue >
                       Select City
@@ -269,7 +306,7 @@ const Home = ({ setShow }) => {
               </div>
               <div className="col-md-2">
 
-                {searchitem?.length > 0 || nodata ?
+                {(searchitem?.length > 0 || nodata) ?
                   <button className="btn btn-outline-light form-control" style={{ padding: "8px" }} onClick={Clear}>
                     <h1 className="d-flex align-items-center justify-content-center" style={{ fontSize: "25px", margin: "0px" }}> clear</h1>
                   </button>
@@ -278,12 +315,13 @@ const Home = ({ setShow }) => {
                     type="submit"
                     className="btn btn-outline-light form-control"
                     style={{ padding: "8px" }}
+                    onClick={() => setsearchitemerr("")}
                   >
-                    <h1 className="d-flex align-items-center justify-content-center" onClick={() => setsearchitemerr("")} style={{ fontSize: "25px", margin: "0px" }}>Search</h1>
+                    <h1 className="d-flex align-items-center justify-content-center" style={{ fontSize: "25px", margin: "0px" }}>Search</h1>
                   </button>
                 }
               </div>
-              {searchitemerr && <h4 class="alert alert-danger d-flex justify-content-start mt-2 p-1 ps-2" style={{ marginRight: "", width: "920px" }} role="alert">{searchitemerr}</h4>}
+              {searchitemerr && !showerrmsg && <h4 class="alert alert-danger d-flex justify-content-start mt-2 p-1 ps-2" style={{ marginRight: "", width: "920px" }} role="alert">{searchitemerr}</h4>}
             </div>
             <div>
             </div>
@@ -296,55 +334,92 @@ const Home = ({ setShow }) => {
         </NavLink>
 
       </section>
-
-
-      <div className="col-md-12 scrolling" ref={ref}>
-
-        {loading ?
-          <div className='d-flex justify-content-center mt-5'>
-            <ColorRing
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="blocks-loading"
-              wrapperStyle={{}}
-              wrapperClass="blocks-wrapper"
-              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-            />
-          </div>
-          :
-          searchitem &&
-          (searchitem?.map((curval, index) => (
-            <>
-              <div className="col-lg-3 col-md-6 col-sm-6 ">
-                <div class="card p-3" >
-                  <NavLink to={`/property/${curval.p_id}`} style={{ textDecoration: "none", color: "black" }}>
-
-                    <div style={{ height: "200px", width: "100%" }}>
-                      <img src={curval.photo_path[0]} class="card-img-top img-fluid" alt="Product" style={{ height: "200px", width: "100%", objectFit: "contain" }} />
-                    </div>
-
-
-                    <div class="card-body px-1  pb-0 ">
-                      <div className="d-flex justify-content-between">
-                        <p class="">Price : {curval.price}</p>
-                        <p class="product_brand mb-0">BHK : {curval.bhk}</p>
+      {loading ?
+        <div className='d-flex justify-content-center mt-5'>
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />
+        </div>
+        :
+        <>
+          <div className='container' ref={ref}>
+            <div className='row d-flex justify-content-evenly align-items-center mt-5'>
+              {(searchitem?.length > 0 || searchdata?.length > 0) ?
+                (searchitem?.map((val, index) => (
+                  <>                    
+                    {/* {val.prop_deal === false && */}
+                      <div className='col-md-5 col-lg-4 my-4 mx-md-2 mx-lg-0 d-flex justify-content-center' style={{ cursor: "pointer" }}>
+                      <div className='card'>
+                        <div class="card__image-holder">
+                          <NavLink to={`/myproperty/${val?.p_id}`} style={{ textDecoration: "none", color: "black" }}>
+                            <img class="card__image img-card" src={val.photo_path[0]} alt="wave" />
+                          </NavLink>
+                          <div className='sale-notic' style={{ background: val.sell_or_rent.trim() === "Sell" ? "red" : "#f48225" }} >for {val.sell_or_rent}</div>
+                        </div>
+                        <NavLink to={`/myproperty/${val?.p_id}`} style={{ textDecoration: "none", color: "black" }}>
+                          <div className='border-card'>
+                            <div className='text-center card-address'>
+                              <p className='text-uppercase'>
+                                <FaLocationDot className='card-icon' /> : {val.city_name},{val.state_name}
+                              </p>
+                            </div>
+                            <hr style={{ margin: "0" }}></hr>
+                            <div className='room-info-warp over'>
+                              <div className='room-info'>
+                                <p>
+                                  <BiArea className='card-icon' /> : {val.prop_size} sqft
+                                </p>
+                                <p>
+                                  <RiHome4Line className='card-icon' /> : {val.bhk} BHK
+                                </p>
+                              </div>
+                              <div className='room-info'>
+                                <p>
+                                  <IoIosBed className='card-icon' /> : {val.furniture}
+                                </p>
+                                <p>
+                                  <FaBuilding className='card-icon' /> : {val.prop_type}
+                                </p>
+                              </div>
+                            </div>
+                            <hr style={{ margin: "0" }}></hr>
+                            <div className='room-info-warp'>
+                              <div className='room-info'>
+                                <p>
+                                  <FaUserCircle className='card-icon' /> : {val.Holder_name}
+                                </p>
+                                <p>
+                                  <BiTime className='card-icon' /> : {val.ddate}
+                                </p>
+                              </div>
+                            </div>
+                            <a className='room-price d-flex align-items-center justify-content-center' style={{ textDecoration: "none", color: "white" }}>
+                              <BiDollar className='card-icon' style={{ color: "#fff" }} />{val.price}
+                            </a>
+                          </div>
+                        </NavLink>
                       </div>
-                      <p>Property Size(sqrft) : {curval.prop_size}</p>
-                      <p>State Name : {curval.state_name}</p>
-                      <p>City Name : {curval.city_name}</p>
                     </div>
-                  </NavLink>
-                </div>
-              </div>
-            </>
-          ))
-          )
-        }
-        {nodata &&
-          <h1 >{nodata}</h1>}
-      </div>
+                    {/* } */}
+                  </>
+                ))
+                )
+                :
+                searchitemview === false &&
+                nodata &&
+                <h1 >{nodata}</h1>
+              }
+            </div>
+          </div>
+        </>}
     </>
+
   );
 };
 
