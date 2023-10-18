@@ -16,7 +16,9 @@
     transform-origin: top center
     /* transform: scale(0); */
 }
-
+.colorhover:hover {
+    color: #30caa0;
+}
 @keyframes growDown {
     0% {
         transform: scaleY(0)

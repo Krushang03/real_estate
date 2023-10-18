@@ -29,7 +29,7 @@ const YourProfile = () => {
         <section className='row'>
           <div className='col-12 d-flex justify-content-center align-items-center' style={{ height: "91vh" }} >
             <div className="col col-lg-9 col-xl-8">
-              <div className="" style={{boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px"}}>
+              <div className="" style={{boxShadow: "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px"}}>
                 <div className=" text-white d-flex flex-row black-layer">
                   <div className="ms-3 ms-md-5 mt-5 d-flex flex-column page-1" style={{ width: "180px", height: "180px" }}>
                     <img src={profileitem?.photo} alt="profile image" id='img-profile' className="img-thumbnail img-fluid mt-4 mb-2 img-size" />

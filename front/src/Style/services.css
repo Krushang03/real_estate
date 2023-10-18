@@ -1,0 +1,77 @@
+.box-feature {
+    background: #fff;
+    border-radius: 4px;
+    padding: 30px;
+    transition: 0.5s;
+}
+.box-feature [class^="flaticon-"] {
+    color: #30caa0;
+    font-size: 60px;
+    margin: 0 0 10px 0;
+    display: block;
+    padding: 0;
+    line-height: 0;
+}
+.box-feature:hover {
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+.img-service {
+    width: 60px;
+}
+.learn-more {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+    text-decoration: none;
+    color: #00204a;
+    transition: .3s all ease;
+}
+.learn-more:hover {
+    letter-spacing: 5px;   
+}
+.learn-more:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    height: 2px;
+    background-color: #005555;
+}
+.teacher2 {
+    background-image: url('../images/1.webp');
+    background-size: cover;
+    /* background-position: center; */
+    height: 70vh;
+    background-attachment: fixed;
+}
+.img_te1 {
+    border-radius: 50%;
+    width: 150px !important;
+    height: 150px;
+}
+.box8 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    height: 70vh;
+    width: 50%;
+}
+.box9 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: 400; 
+}
+.testimonial .slider-wrapper {
+    height: 70vh;
+}
+.dark-back2 {
+    align-items: center;
+    background-color: rgb(31, 31, 31,0.8);
+    height: 70vh;
+    width: 100%;
+}

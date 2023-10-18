@@ -73,7 +73,7 @@ const Header = () => {
                       </span>
                     </NavLink>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <NavLink className="nav-link nav-text" to="/about">
                       <span
                         data-bs-toggle="collapse"
@@ -82,7 +82,7 @@ const Header = () => {
                         About
                       </span>
                     </NavLink>
-                  </li>
+                  </li> */}
                   <li className="nav-item">
                     <NavLink className="nav-link nav-text" to="/contact">
                       <span

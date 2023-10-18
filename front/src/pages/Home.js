@@ -16,24 +16,47 @@ import { FaLocationDot } from 'react-icons/fa6';
 import { FaBuilding } from 'react-icons/fa';
 import { FaUserCircle } from 'react-icons/fa';
 import { BiTime } from 'react-icons/bi';
-import { BiDollar } from 'react-icons/bi';
+import { BiDollar, BiLogoGmail } from 'react-icons/bi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { RiHome4Line } from 'react-icons/ri';
 import { BiArea } from 'react-icons/bi';
+import "../Style/contact.css"
+import { MdCall } from 'react-icons/md';
+import '../Style/services.css'
+import house from '../images/1.png'
+import house1 from '../images/real-estate-agent.png'
+import house2 from '../images/building.png'
+import house3 from '../images/house-sale.png'
+import user1 from '../images/5.jpg'
+import { GetPropDealTrueAction } from "../store/actions/propdealtrueAction";
 
 const Home = ({ setShow }) => {
   const dispatch = useDispatch()
   const ref = useRef(null)
   const { searchdata, success, loading } = useSelector((state) => state.searchprop)
+  const { gettruepropdealdata, loading2, success2 } = useSelector((state) => state.propertydeal);
+
   const [searchitem, setsearchitem] = useState()
   const [searchitemerr, setsearchitemerr] = useState()
   const [nodata, setnodata] = useState()
   const [showerrmsg, setshowerrmsg] = useState(false)
   const [searchitemview, setsearchitemview] = useState(false)
+  const [propdealitem, setpropdealitem] = useState([])
 
+
+
+  useEffect(() => {
+    if (gettruepropdealdata) {
+      setpropdealitem(gettruepropdealdata)
+    }
+  }, [gettruepropdealdata, success2])
+  useEffect(() => {
+    dispatch(GetPropDealTrueAction())
+  }, []);
   useEffect(() => {
     if (searchdata) {
       setsearchitem(searchdata)
+      console.log(searchdata);
     }
   }, [searchdata, success])
 
@@ -72,7 +95,10 @@ const Home = ({ setShow }) => {
     setWorlddata(result.data);
     return result.data;
   };
+  
   const country = [...new Set(worlddata.map((item) => item.country))];
+  // const statename = [...new Set(worlddata.map((item) => item.subcountry))];
+  // const cityname = [...new Set(worlddata.map((item) => item.name))];
 
   const handleState = (e) => {
     let allstate = worlddata.filter((val) => val.country === e);
@@ -237,6 +263,7 @@ const Home = ({ setShow }) => {
                     className="form-select"
                     id="floatingSelect"
                     aria-label="Floating label select example"
+                    // {...register("country_name")}
                     {...register("country_name", {
                       onChange: (e) => [handleState(e.target.value), HandleError(e)],
                     })}
@@ -261,6 +288,7 @@ const Home = ({ setShow }) => {
                     className="form-select"
                     id="floatingSelect"
                     aria-label="Floating label select example"
+                    // {...register("state_name")}
                     {...register("state_name", {
                       onChange: (e) => [handleCity(e.target.value), HandleError(e)],
                     })}
@@ -269,6 +297,13 @@ const Home = ({ setShow }) => {
                     <option value="" defaultValue>
                       Select State
                     </option>
+                    {/* {statename.length > 0 ? statename.map((val) => {
+                      return (
+                        <>
+                          <option value={val}>{val}</option>
+                        </>
+                      );
+                    }) : <option value="" style={{ color: "red" }} disabled >please select country</option>} */}
                     {state.length > 0 ? state.map((val) => {
                       return (
                         <>
@@ -299,6 +334,13 @@ const Home = ({ setShow }) => {
                         </>
                       );
                     }) : <option value="" style={{ color: "red" }} disabled >please select state</option>}
+                    {/* {cityname.length > 0 ? cityname.map((val) => {
+                      return (
+                        <>
+                          <option value={val}>{val}</option>
+                        </>
+                      );
+                    }) : <option value="" style={{ color: "red" }} disabled >please select state</option>} */}
 
                   </select>
                   <label htmlFor="floatingSelect">city</label>
@@ -321,7 +363,7 @@ const Home = ({ setShow }) => {
                   </button>
                 }
               </div>
-              {searchitemerr && !showerrmsg && <h4 class="alert alert-danger d-flex justify-content-start mt-2 p-1 ps-2" style={{ marginRight: "", width: "920px" }} role="alert">{searchitemerr}</h4>}
+              {searchitemerr && !showerrmsg && <h4 class="alert alert-danger col-11 d-flex justify-content-center mt-2 p-1 ps-2" style={{ marginRight: "", width: "" }} role="alert">{searchitemerr}</h4>}
             </div>
             <div>
             </div>
@@ -352,9 +394,9 @@ const Home = ({ setShow }) => {
             <div className='row d-flex justify-content-evenly align-items-center mt-5'>
               {(searchitem?.length > 0 || searchdata?.length > 0) ?
                 (searchitem?.map((val, index) => (
-                  <>                    
+                  <>
                     {/* {val.prop_deal === false && */}
-                      <div className='col-md-5 col-lg-4 my-4 mx-md-2 mx-lg-0 d-flex justify-content-center' style={{ cursor: "pointer" }}>
+                    <div className='col-md-5 col-lg-4 my-4 mx-md-2 mx-lg-0 d-flex justify-content-center' style={{ cursor: "pointer" }}>
                       <div className='card'>
                         <div class="card__image-holder">
                           <NavLink to={`/myproperty/${val?.p_id}`} style={{ textDecoration: "none", color: "black" }}>
@@ -413,11 +455,267 @@ const Home = ({ setShow }) => {
                 :
                 searchitemview === false &&
                 nodata &&
-                <h1 >{nodata}</h1>
+                <h1 className="d-flex justify-content-center" style={{color:"red"}}>{nodata}</h1>
               }
             </div>
           </div>
         </>}
+
+
+        <div className="col-md-12">
+        {loading ?
+          <div className='d-flex justify-content-center mt-5'>
+            <ColorRing
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+            />
+          </div>
+          : <div className="row d-flex justify-content-evenly gy-3 m-5">
+            <h1 className="d-flex justify-content-center text-capitalize">resent dealed property</h1>
+              {(propdealitem?.length > 0) ?
+                (propdealitem?.map((val, index) => (
+                  <>                    
+                    {/* {val.prop_deal === false && */}
+                      <div className='col-md-5 col-lg-4 my-4 mx-md-2 mx-lg-0 d-flex justify-content-center' style={{ cursor: "pointer" }}>
+                      <div className='card'>
+                        <div class="card__image-holder">
+                          <NavLink to={`/myproperty/${val?.p_id}`} style={{ textDecoration: "none", color: "black" }}>
+                            <img class="card__image img-card" src={val.photo_path[0]} alt="wave" />
+                          </NavLink>
+                          <div className='sale-notic' style={{ background: val.sell_or_rent.trim() === "Sell" ? "red" : "#f48225" }} >for {val.sell_or_rent}</div>
+                        </div>
+                        <NavLink to={`/myproperty/${val?.p_id}`} style={{ textDecoration: "none", color: "black" }}>
+                          <div className='border-card'>
+                            <div className='text-center card-address'>
+                              <p className='text-uppercase'>
+                                <FaLocationDot className='card-icon' /> : {val.city_name},{val.state_name}
+                              </p>
+                            </div>
+                            <hr style={{ margin: "0" }}></hr>
+                            <div className='room-info-warp over'>
+                              <div className='room-info'>
+                                <p>
+                                  <BiArea className='card-icon' /> : {val.prop_size} sqft
+                                </p>
+                                <p>
+                                  <RiHome4Line className='card-icon' /> : {val.bhk} BHK
+                                </p>
+                              </div>
+                              <div className='room-info'>
+                                <p>
+                                  <IoIosBed className='card-icon' /> : {val.furniture}
+                                </p>
+                                <p>
+                                  <FaBuilding className='card-icon' /> : {val.prop_type}
+                                </p>
+                              </div>
+                            </div>
+                            <hr style={{ margin: "0" }}></hr>
+                            <div className='room-info-warp'>
+                              <div className='room-info'>
+                                <p>
+                                  <FaUserCircle className='card-icon' /> : {val.Holder_name}
+                                </p>
+                                <p>
+                                  <BiTime className='card-icon' /> : {val.ddate}
+                                </p>
+                              </div>
+                            </div>
+                            <a className='room-price d-flex align-items-center justify-content-center' style={{ textDecoration: "none", color: "white" }}>
+                              <BiDollar className='card-icon' style={{ color: "#fff" }} />{val.price}
+                            </a>
+                          </div>
+                        </NavLink>
+                      </div>
+                    </div>
+                    {/* } */}
+                  </>
+                ))
+                )
+              : <h1 className='d-flex justify-content-center' style={{ color: "red" }}>No Available Verified Propties</h1>
+            }
+          </div>}
+      </div>
+
+      <div className='container'>
+        <h1 className="text-center pb-3">Services</h1>
+        <div className='row mb-5'>
+          <div className='col-md-6 col-12 col-lg-3'>
+            <div className='box-feature mb-4'>
+              <img src={house} className='img-service mb-4' />
+              <h3 class="text-black mb-3 font-weight-bold">
+                Quality Properties
+              </h3>
+              <p class="text-black-50">
+                Far far away, behind the word mountains, far from the countries
+                Vokalia and Consonantia, there live the blind texts.
+              </p>
+              {/* <p><a href="#" class="learn-more">Read more</a></p> */}
+            </div>
+          </div>
+          <div className='col-md-6 col-12 col-lg-3'>
+            <div className='box-feature mb-4'>
+              <img src={house1} className='img-service mb-4' />
+              <h3 class="text-black mb-3 font-weight-bold">
+                Top Rated Agent
+              </h3>
+              <p class="text-black-50">
+                Far far away, behind the word mountains, far from the countries
+                Vokalia and Consonantia, there live the blind texts.
+              </p>
+              {/* <p><a href="#" class="learn-more">Read more</a></p> */}
+            </div>
+          </div>
+          <div className='col-md-6 col-12 col-lg-3'>
+            <div className='box-feature mb-4'>
+              <img src={house2} className='img-service mb-4' />
+              <h3 class="text-black mb-3 font-weight-bold">
+                Property for Sale
+              </h3>
+              <p class="text-black-50">
+                Far far away, behind the word mountains, far from the countries
+                Vokalia and Consonantia, there live the blind texts.
+              </p>
+              {/* <p><a href="#" class="learn-more">Read more</a></p> */}
+            </div>
+          </div>
+          <div className='col-md-6 col-12 col-lg-3'>
+            <div className='box-feature mb-4'>
+              <img src={house3} className='img-service mb-4' />
+              <h3 class="text-black mb-3 font-weight-bold">
+                House for Sale
+              </h3>
+              <p class="text-black-50">
+                Far far away, behind the word mountains, far from the countries
+                Vokalia and Consonantia, there live the blind texts.
+              </p>
+              {/* <p><a href="#" class="learn-more">Read more</a></p> */}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="teacher2 mb-5">
+        <div className='dark-back2'>
+          <div className="container">
+            <Carousel
+              autoPlay={true}
+              transitionTime={500}
+              infiniteLoop={true}
+              showStatus={false}
+              showArrows={false}
+              // showIndicators={false}
+              stopOnHover={false}
+              emulateTouch={true}
+              className='testimonial'
+            >
+              <div class="box8">
+                <div class="box9">
+                  <img src={user1} class="img_te1 mb-3" />
+                  <h4>Jerome Jensen</h4>
+                  <i>“ Lorem
+                    ipsum dolor sit amet consectetur adipisicing elit. Rerum rem soluta sit eius necessitatibus
+                    voluptate excepturi beatae ad eveniet sapiente impedit quae modi quo provident odit molestias! Rem
+                    reprehenderit assumenda ”</i>
+                </div>
+              </div>
+              <div class="box8">
+                <div class="box9">
+                  <img src={user1} class="img_te1 mb-3" />
+                  <h4>Jerome Jensen</h4>
+                  <i>“ Lorem
+                    ipsum dolor sit amet consectetur adipisicing elit. Rerum rem soluta sit eius necessitatibus
+                    voluptate excepturi beatae ad eveniet sapiente impedit quae modi quo provident odit molestias! Rem
+                    reprehenderit assumenda ”</i>
+                </div>
+              </div>
+              <div class="box8">
+                <div class="box9">
+                  <img src={user1} class="img_te1 mb-3" />
+                  <h4>Jerome Jensen</h4>
+                  <i>“ Lorem
+                    ipsum dolor sit amet consectetur adipisicing elit. Rerum rem soluta sit eius necessitatibus
+                    voluptate excepturi beatae ad eveniet sapiente impedit quae modi quo provident odit molestias! Rem
+                    reprehenderit assumenda ”</i>
+                </div>
+              </div>
+            </Carousel>
+          </div>
+        </div>
+      </div>
+      <div className='container my-5'>
+        <h1 className="text-center pb-5">Contact-us</h1>
+        <div className='row'>
+          <div className='col-lg-4 mb-5 mb-lg-0'>
+            <div className='contact-info'>
+              <div className='con-address mt-2'>
+                <FaLocationDot className='con-icon me-3' />
+                <div className='d-flex flex-column'>
+                  <h4>Location:</h4>
+                  <p>43 Raymouth Rd. Baltemoer,London 3910</p>
+                </div>
+              </div>
+              <div className='con-hours mt-2'>
+                <BiTime className='con-icon me-2' />
+                <div className='d-flex flex-column'>
+                  <h4>Open Hours:</h4>
+                  <p className='mb-0'>Sunday-Friday:</p>
+                  <p>11:00 AM - 2300 PM</p>
+                </div>
+              </div>
+              <div className='con-email mt-2'>
+                <BiLogoGmail className='con-icon me-2' />
+                <div className='d-flex flex-column'>
+                  <h4>Email:</h4>
+                  <p className='mb-0'>nfo@Untree.co</p>
+                </div>
+              </div>
+              <div className='con-email mt-4'>
+                <MdCall className='con-icon me-2' />
+                <div className='d-flex flex-column'>
+                  <h4>Call:</h4>
+                  <p className='mb-0'>+91 12345 54885</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='col-lg-8'>
+            <form>
+              <div className='row'>
+                <div className='col-6 mb-3'>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Username" />
+                    <label for="floatingInputGroup1">Your Name</label>
+                  </div>
+                </div>
+                <div className='col-6 mb-3'>
+                  <div class="form-floating">
+                    <input type="email" class="form-control" id="floatingInputGroup1" placeholder="Username" />
+                    <label for="floatingInputGroup1">Your Email</label>
+                  </div>
+                </div>
+                <div className='col-12 mb-3'>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Username" />
+                    <label for="floatingInputGroup1">Subject</label>
+                  </div>
+                </div>
+                <div className='col-12 mb-3'>
+                  <div class="form-floating">
+                    <textarea type="text" class="form-control" id="floatingInputGroup1" placeholder="Username" style={{ height: "165px" }} />
+                    <label for="floatingInputGroup1">Message</label>
+                  </div>
+                </div>
+              </div>
+              <button className="btn-message" type="submit">Send-Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </>
 
   );

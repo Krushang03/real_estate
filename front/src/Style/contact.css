@@ -1,0 +1,36 @@
+.con-icon {
+    font-size: 20px;
+    float: left;
+    width: 44px;
+    height: 44px;
+    padding: 12px;
+    background: #30caa0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    color: #fff;
+}
+.btn-message {
+    background-color: #30caa0;
+    border: 0;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 30px;
+}
+.btn-message:hover {
+    background-color: #fff;
+    border: 1px solid #30caa0;
+    color: #30caa0;
+}
+.contact {
+    height: 50vh;
+    color: #fff;
+    background-image: url("../images/1.webp");
+}
+.dark-back {
+    align-items: center;
+    background-color: rgb(31, 31, 31,0.5);
+    height: 50vh;
+    width: 100%;
+}

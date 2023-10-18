@@ -18,7 +18,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import YourProfile from "./pages/YourProfile";
 import ForgotPassword from "./component/ForgotPassword";
-
+import Footer from "./component/Footer";
+import Contact from "./pages/Contact";
 function App() {
   const [show, setShow] = useState(true);
   return (
@@ -33,13 +34,14 @@ function App() {
           <Route path="/myproperty" element={<MyProperty />} />
           <Route path="/yourprofile" element={<YourProfile />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
           {/* <Route path="/services" element={<Protected Cmp={Services} />} /> */}
           <Route path="/allproperty" element={<Features />} />
           <Route path="/addproperty" element={<Addproperty />} />
           <Route path="*" element={<Page404 setShow={setShow} show={show} />} />
-          {/* <Route path='/about' element={<About />} />
-          <Route path='/contactus' element={<Contactus />} /> */}
         </Routes>
+       {show && <Footer />}
         <ToastContainer />
       </BrowserRouter>
     </>

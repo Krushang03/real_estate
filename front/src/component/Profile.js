@@ -33,9 +33,9 @@ const Profile = () => {
         </button>
         <ul className="dropdown-menu">
           <NavLink to="/yourprofile" className="" style={{textDecoration:"none", color:"black"}}>
-            <li className="dropdown d-flex justify-content-center p-2 colorhover">
-              <div><FaUser style={{ fontSize: "18px" }} /></div>
-              <div className="ps-2">My Profile</div>
+            <li className="dropdown d-flex justify-content-center p-2">
+              <div className="colorhover d-flex"><FaUser style={{ fontSize: "18px" }} /><div className="ps-2">My Profile</div></div>
+              
             </li>
           </NavLink>
           <li>
